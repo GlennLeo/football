@@ -7,29 +7,92 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Post {
-  id        Int      @default(autoincrement()) @id
-  title     String
-  createdAt DateTime @default(now())
-  content   String?
-  published Boolean  @default(false)
-  authorId  Int
-  author      User     @relation(fields: [authorId], references: [id])
-
-  @@index([authorId], name: "authorId")
-}
-
-model Profile {
-  id     Int     @default(autoincrement()) @id
-  bio    String?
-  userId Int     @unique
-  user   User    @relation(fields: [userId], references: [id])
-}
-
 model User {
-  id      Int      @default(autoincrement()) @id
-  name    String?
-  email   String   @unique
-  post    Post[]
-  profile Profile?
+  id                Int                 @default(autoincrement()) @id
+  name              String?
+  email             String              @unique
+  password          String
+  phone             String?
+  Member            Member[]
+  Player_Statistics Player_Statistics[]
+  Team              Team[]
+}
+
+model Match {
+  id                       Int                 @default(autoincrement()) @id
+  homeId                   Int?
+  date                     DateTime?
+  field                    String?
+  location                 String?
+  guestId                  Int?
+  createdAt                DateTime?           @default(now())
+  updatedAt                DateTime?           @default(now())
+  Team_Match_guestIdToTeam Team?               @relation("Match_guestIdToTeam", fields: [guestId], references: [id])
+  Team_Match_homeIdToTeam  Team?               @relation("Match_homeIdToTeam", fields: [homeId], references: [id])
+  Match_Report             Match_Report?
+  Player_Statistics        Player_Statistics[]
+
+  @@index([guestId], name: "guestId_idx")
+  @@index([homeId], name: "homeId_idx")
+  @@index([id], name: "id")
+}
+
+model Match_Report {
+  matchId  Int     @id
+  result   String?
+  winnerId Int?
+  Match    Match   @relation(fields: [matchId], references: [id])
+  Team     Team?   @relation(fields: [winnerId], references: [id])
+
+  @@index([winnerId], name: "winnerId_idx")
+}
+
+model Team {
+  id                        Int            @default(autoincrement()) @id
+  name                      String
+  logo                      String
+  description               String?
+  win                       Int?           @default(0)
+  loose                     Int?           @default(0)
+  home                      String?
+  creatorId                 Int
+  User                      User           @relation(fields: [creatorId], references: [id])
+  Match_Match_guestIdToTeam Match[]        @relation("Match_guestIdToTeam")
+  Match_Match_homeIdToTeam  Match[]        @relation("Match_homeIdToTeam")
+  Match_Report              Match_Report[]
+  Member                    Member[]
+
+  @@index([creatorId], name: "creatorId_idx")
+}
+
+model Member {
+  memberId   Int
+  teamId     Int
+  role       Member_role? @default(MEMBER)
+  fee_status Int?
+  id         Int          @default(autoincrement()) @id
+  User       User         @relation(fields: [memberId], references: [id])
+  Team       Team         @relation(fields: [teamId], references: [id])
+
+  @@index([memberId], name: "memberId_idx")
+  @@index([teamId], name: "teamId_idx")
+}
+
+model Player_Statistics {
+  matchId  Int
+  playerId Int
+  score    Int?
+  assist   Int?
+  id       Int   @default(autoincrement()) @id
+  Match    Match @relation(fields: [matchId], references: [id])
+  User     User  @relation(fields: [playerId], references: [id])
+
+  @@index([matchId], name: "pl_match")
+  @@index([playerId], name: "playerId_idx")
+}
+
+enum Member_role {
+  MANAGER
+  MEMBER
+  PENDING
 }

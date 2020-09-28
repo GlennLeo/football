@@ -15,49 +15,54 @@ const User = objectType({
     t.model.id();
     t.model.name();
     t.model.email();
+    t.model.password();
+    t.model.phone();
   },
 });
 
-const Post = objectType({
-  name: "Post",
+const Team = objectType({
+  name: "Team",
   definition(t) {
     t.model.id();
-    t.model.title();
-    t.model.content();
-    t.model.published();
-    t.model.author();
-    t.model.authorId();
+    t.model.name();
+    t.model.logo();
+    t.model.description();
+    t.model.win();
+    t.model.loose();
+    t.model.home();
+    t.model.creatorId();
+  },
+});
+
+const Match = objectType({
+  name: "Match",
+  definition(t) {
+    t.model.id();
+    t.model.homeId();
+    t.model.guestId();
+    t.model.field();
+    t.model.date();
+    t.model.location();
+    t.model.createdAt();
+    t.model.updatedAt();
   },
 });
 
 const Query = queryType({
   definition(t) {
-    t.crud.post();
+    t.crud.team();
+    t.crud.teams();
     t.crud.user();
     t.crud.users();
 
-    t.list.field("feed", {
-      type: Post,
-      resolve: (_, args, ctx) => {
-        return ctx.prisma.post.findMany({
-          where: { published: true },
-        });
-      },
-    });
-
-    t.list.field("filterPosts", {
-      type: Post,
+    t.list.field("filterTeam", {
+      type: Team,
       args: {
-        searchString: stringArg({ nullable: true }),
+        name: stringArg({ nullable: true }),
       },
-      resolve: (_, { searchString }, ctx) => {
-        return ctx.prisma.post.findMany({
-          where: {
-            OR: [
-              { title: { contains: searchString } },
-              { content: { contains: searchString } },
-            ],
-          },
+      resolve: (_, { name }, ctx) => {
+        return ctx.prisma.team.findMany({
+          where: { name },
         });
       },
     });
@@ -67,47 +72,35 @@ const Query = queryType({
 const Mutation = mutationType({
   definition(t) {
     t.crud.createOneUser({ alias: "signupUser" });
-    t.crud.deleteOnePost();
+    t.crud.createOneTeam({ alias: "createOneTeam" });
+    t.crud.createOneMatch();
 
-    t.field("createDraft", {
-      type: Post,
-      args: {
-        title: stringArg({ nullable: false }),
-        content: stringArg(),
-        authorEmail: stringArg({ nullable: false }),
-      },
-      resolve: (_, { title, content, authorEmail }, ctx) => {
-        return ctx.prisma.post.create({
-          data: {
-            title,
-            content,
-            published: false,
-            author: {
-              connect: { email: authorEmail },
-            },
-          },
-        });
-      },
-    });
-
-    t.field("publish", {
-      type: Post,
-      nullable: true,
-      args: {
-        id: intArg(),
-      },
-      resolve: (_, { id }, ctx) => {
-        return ctx.prisma.post.update({
-          where: { id: Number(id) },
-          data: { published: true },
-        });
-      },
-    });
+    // t.field("createOneMatch", {
+    //   type: Match,
+    //   args: {
+    //     homeId: intArg({ nullable: false }),
+    //     guestId: stringArg(),
+    //     field: stringArg({ nullable: false }),
+    //     location: stringArg({ nullable: false }),
+    //     date: stringArg({ nullable: false }),
+    //   },
+    //   resolve: (_, { homeId, guestId, field, location, date }, ctx) => {
+    //     return ctx.prisma.match.create({
+    //       data: {
+    //         Team_Match_homeIdToTeam,
+    //         guestId,
+    //         field,
+    //         location,
+    //         date,
+    //       },
+    //     });
+    //   },
+    // });
   },
 });
 
 export const schema = makeSchema({
-  types: [Query, Mutation, Post, User],
+  types: [Query, Mutation, User, Team, Match],
   plugins: [nexusSchemaPrisma({ experimentalCRUD: true })],
   outputs: {
     schema: __dirname + "/generated/schema.graphql",
