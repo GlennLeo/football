@@ -1,7 +1,6 @@
 /// <reference path="./generated/nexus.ts" />
 import { nexusSchemaPrisma } from "nexus-plugin-prisma/schema";
 import {
-  intArg,
   makeSchema,
   mutationType,
   objectType,
@@ -87,7 +86,7 @@ const Mutation = mutationType({
     //   resolve: (_, { homeId, guestId, field, location, date }, ctx) => {
     //     return ctx.prisma.match.create({
     //       data: {
-    //         Team_Match_homeIdToTeam,
+    //         homeId,
     //         guestId,
     //         field,
     //         location,
