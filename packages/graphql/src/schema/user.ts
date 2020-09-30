@@ -27,8 +27,30 @@ export const AuthUser = objectType({
 export const UserQuery = extendType({
   type: "Query",
   definition(t) {
-    t.crud.user();
-    t.crud.users();
+    t.crud.user({
+      async resolve(_, args, ctx, info, originalResolver) {
+        if (!ctx.authUser) {
+          throw new Error("Unauthorized!!!");
+        }
+        const user = await originalResolver(_, args, ctx, info);
+        const refactorUser = { ...user };
+        delete refactorUser.password;
+        return refactorUser;
+      },
+    });
+    t.crud.users({
+      async resolve(_, args, ctx, info, originalResolver) {
+        if (!ctx.authUser) {
+          throw new Error("Unauthorized!!!");
+        }
+        const users = await originalResolver(_, args, ctx, info);
+        const refactorUser = users.map((user) => {
+          delete user.password;
+          return user;
+        });
+        return refactorUser;
+      },
+    });
   },
 });
 
@@ -63,11 +85,15 @@ export const UserMutation = extendType({
             password: hash,
           },
         });
-        const token = jwt.sign(user.email, config.TOKEN_SECRET, { expiresIn });
-        const cloneUser = { ...user };
-        delete cloneUser.password;
+        const token = jwt.sign(
+          { id: user.id, email: user.email },
+          config.TOKEN_SECRET,
+          { expiresIn }
+        );
+        const refactorUser = { ...user };
+        delete refactorUser.password;
         return {
-          user: cloneUser,
+          user: refactorUser,
           token: token,
         };
       },
@@ -93,11 +119,15 @@ export const UserMutation = extendType({
           existingUser.password
         );
         if (isValidPassword) {
-          const token = jwt.sign(existingUser.email, config.TOKEN_SECRET);
-          const cloneUser = { ...existingUser };
-          delete cloneUser.password;
+          const token = jwt.sign(
+            { id: existingUser.id, email: existingUser.email },
+            config.TOKEN_SECRET,
+            { expiresIn }
+          );
+          const refactorUser = { ...existingUser };
+          delete refactorUser.password;
           return {
-            user: cloneUser,
+            user: refactorUser,
             token: token,
           };
         }

@@ -299,10 +299,7 @@ export interface NexusGenScalars {
 }
 
 export interface NexusGenRootTypes {
-  AuthUser: { // root type
-    token: string; // String!
-    user: NexusGenRootTypes['User']; // User!
-  }
+  AuthUser: Context.AuthUser;
   Mutation: {};
   Query: {};
   Team: { // root type
