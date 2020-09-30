@@ -254,15 +254,6 @@ export interface NexusGenInputs {
     creatorId?: number | null; // Int
     id?: number | null; // Int
   }
-  UserCreateInput: { // input type
-    email: string; // String!
-    Member?: NexusGenInputs['MemberCreateManyWithoutUserInput'] | null; // MemberCreateManyWithoutUserInput
-    name?: string | null; // String
-    password: string; // String!
-    phone?: string | null; // String
-    Player_Statistics?: NexusGenInputs['Player_StatisticsCreateManyWithoutUserInput'] | null; // Player_StatisticsCreateManyWithoutUserInput
-    Team?: NexusGenInputs['TeamCreateManyWithoutUserInput'] | null; // TeamCreateManyWithoutUserInput
-  }
   UserCreateOneWithoutMemberInput: { // input type
     connect?: NexusGenInputs['UserWhereUniqueInput'] | null; // UserWhereUniqueInput
     create?: NexusGenInputs['UserCreateWithoutMemberInput'] | null; // UserCreateWithoutMemberInput
@@ -319,6 +310,10 @@ export interface NexusGenScalars {
 }
 
 export interface NexusGenRootTypes {
+  AuthUser: { // root type
+    token: string; // String!
+    user: NexusGenRootTypes['User']; // User!
+  }
   Match: { // root type
     createdAt?: NexusGenScalars['DateTime'] | null; // DateTime
     date?: NexusGenScalars['DateTime'] | null; // DateTime
@@ -388,7 +383,6 @@ export interface NexusGenAllTypes extends NexusGenRootTypes {
   TeamCreateWithoutMemberInput: NexusGenInputs['TeamCreateWithoutMemberInput'];
   TeamCreateWithoutUserInput: NexusGenInputs['TeamCreateWithoutUserInput'];
   TeamWhereUniqueInput: NexusGenInputs['TeamWhereUniqueInput'];
-  UserCreateInput: NexusGenInputs['UserCreateInput'];
   UserCreateOneWithoutMemberInput: NexusGenInputs['UserCreateOneWithoutMemberInput'];
   UserCreateOneWithoutPlayer_StatisticsInput: NexusGenInputs['UserCreateOneWithoutPlayer_StatisticsInput'];
   UserCreateOneWithoutTeamInput: NexusGenInputs['UserCreateOneWithoutTeamInput'];
@@ -406,6 +400,10 @@ export interface NexusGenAllTypes extends NexusGenRootTypes {
 }
 
 export interface NexusGenFieldTypes {
+  AuthUser: { // field return type
+    token: string; // String!
+    user: NexusGenRootTypes['User']; // User!
+  }
   Match: { // field return type
     createdAt: NexusGenScalars['DateTime'] | null; // DateTime
     date: NexusGenScalars['DateTime'] | null; // DateTime
@@ -419,7 +417,8 @@ export interface NexusGenFieldTypes {
   Mutation: { // field return type
     createOneMatch: NexusGenRootTypes['Match']; // Match!
     createOneTeam: NexusGenRootTypes['Team']; // Team!
-    signupUser: NexusGenRootTypes['User']; // User!
+    login: NexusGenRootTypes['AuthUser'] | null; // AuthUser
+    signup: NexusGenRootTypes['AuthUser'] | null; // AuthUser
   }
   Query: { // field return type
     filterTeam: NexusGenRootTypes['Team'][]; // [Team!]!
@@ -455,8 +454,15 @@ export interface NexusGenArgTypes {
     createOneTeam: { // args
       data: NexusGenInputs['TeamCreateInput']; // TeamCreateInput!
     }
-    signupUser: { // args
-      data: NexusGenInputs['UserCreateInput']; // UserCreateInput!
+    login: { // args
+      email: string; // String!
+      password: string; // String!
+    }
+    signup: { // args
+      email: string; // String!
+      name?: string | null; // String
+      password: string; // String!
+      phone?: string | null; // String
     }
   }
   Query: {
@@ -489,9 +495,9 @@ export interface NexusGenAbstractResolveReturnTypes {
 
 export interface NexusGenInheritedFields {}
 
-export type NexusGenObjectNames = "Match" | "Mutation" | "Query" | "Team" | "User";
+export type NexusGenObjectNames = "AuthUser" | "Match" | "Mutation" | "Query" | "Team" | "User";
 
-export type NexusGenInputNames = "MatchCreateInput" | "MatchCreateManyWithoutTeam_Match_guestIdToTeamInput" | "MatchCreateManyWithoutTeam_Match_homeIdToTeamInput" | "MatchCreateOneWithoutMatch_ReportInput" | "MatchCreateOneWithoutPlayer_StatisticsInput" | "MatchCreateWithoutMatch_ReportInput" | "MatchCreateWithoutPlayer_StatisticsInput" | "MatchCreateWithoutTeam_Match_guestIdToTeamInput" | "MatchCreateWithoutTeam_Match_homeIdToTeamInput" | "MatchWhereUniqueInput" | "Match_ReportCreateManyWithoutTeamInput" | "Match_ReportCreateOneWithoutMatchInput" | "Match_ReportCreateWithoutMatchInput" | "Match_ReportCreateWithoutTeamInput" | "Match_ReportWhereUniqueInput" | "MemberCreateManyWithoutTeamInput" | "MemberCreateManyWithoutUserInput" | "MemberCreateWithoutTeamInput" | "MemberCreateWithoutUserInput" | "MemberWhereUniqueInput" | "Player_StatisticsCreateManyWithoutMatchInput" | "Player_StatisticsCreateManyWithoutUserInput" | "Player_StatisticsCreateWithoutMatchInput" | "Player_StatisticsCreateWithoutUserInput" | "Player_StatisticsWhereUniqueInput" | "TeamCreateInput" | "TeamCreateManyWithoutUserInput" | "TeamCreateOneWithoutMatch_Match_guestIdToTeamInput" | "TeamCreateOneWithoutMatch_Match_homeIdToTeamInput" | "TeamCreateOneWithoutMatch_ReportInput" | "TeamCreateOneWithoutMemberInput" | "TeamCreateWithoutMatch_Match_guestIdToTeamInput" | "TeamCreateWithoutMatch_Match_homeIdToTeamInput" | "TeamCreateWithoutMatch_ReportInput" | "TeamCreateWithoutMemberInput" | "TeamCreateWithoutUserInput" | "TeamWhereUniqueInput" | "UserCreateInput" | "UserCreateOneWithoutMemberInput" | "UserCreateOneWithoutPlayer_StatisticsInput" | "UserCreateOneWithoutTeamInput" | "UserCreateWithoutMemberInput" | "UserCreateWithoutPlayer_StatisticsInput" | "UserCreateWithoutTeamInput" | "UserWhereUniqueInput";
+export type NexusGenInputNames = "MatchCreateInput" | "MatchCreateManyWithoutTeam_Match_guestIdToTeamInput" | "MatchCreateManyWithoutTeam_Match_homeIdToTeamInput" | "MatchCreateOneWithoutMatch_ReportInput" | "MatchCreateOneWithoutPlayer_StatisticsInput" | "MatchCreateWithoutMatch_ReportInput" | "MatchCreateWithoutPlayer_StatisticsInput" | "MatchCreateWithoutTeam_Match_guestIdToTeamInput" | "MatchCreateWithoutTeam_Match_homeIdToTeamInput" | "MatchWhereUniqueInput" | "Match_ReportCreateManyWithoutTeamInput" | "Match_ReportCreateOneWithoutMatchInput" | "Match_ReportCreateWithoutMatchInput" | "Match_ReportCreateWithoutTeamInput" | "Match_ReportWhereUniqueInput" | "MemberCreateManyWithoutTeamInput" | "MemberCreateManyWithoutUserInput" | "MemberCreateWithoutTeamInput" | "MemberCreateWithoutUserInput" | "MemberWhereUniqueInput" | "Player_StatisticsCreateManyWithoutMatchInput" | "Player_StatisticsCreateManyWithoutUserInput" | "Player_StatisticsCreateWithoutMatchInput" | "Player_StatisticsCreateWithoutUserInput" | "Player_StatisticsWhereUniqueInput" | "TeamCreateInput" | "TeamCreateManyWithoutUserInput" | "TeamCreateOneWithoutMatch_Match_guestIdToTeamInput" | "TeamCreateOneWithoutMatch_Match_homeIdToTeamInput" | "TeamCreateOneWithoutMatch_ReportInput" | "TeamCreateOneWithoutMemberInput" | "TeamCreateWithoutMatch_Match_guestIdToTeamInput" | "TeamCreateWithoutMatch_Match_homeIdToTeamInput" | "TeamCreateWithoutMatch_ReportInput" | "TeamCreateWithoutMemberInput" | "TeamCreateWithoutUserInput" | "TeamWhereUniqueInput" | "UserCreateOneWithoutMemberInput" | "UserCreateOneWithoutPlayer_StatisticsInput" | "UserCreateOneWithoutTeamInput" | "UserCreateWithoutMemberInput" | "UserCreateWithoutPlayer_StatisticsInput" | "UserCreateWithoutTeamInput" | "UserWhereUniqueInput";
 
 export type NexusGenEnumNames = "Member_role";
 

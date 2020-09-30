@@ -2,6 +2,11 @@
 ### Do not make changes to this file directly
 
 
+type AuthUser {
+  token: String!
+  user: User!
+}
+
 scalar DateTime
 
 type Match {
@@ -159,7 +164,8 @@ input MemberWhereUniqueInput {
 type Mutation {
   createOneMatch(data: MatchCreateInput!): Match!
   createOneTeam(data: TeamCreateInput!): Team!
-  signupUser(data: UserCreateInput!): User!
+  login(email: String!, password: String!): AuthUser
+  signup(email: String!, name: String, password: String!, phone: String): AuthUser
 }
 
 input Player_StatisticsCreateManyWithoutMatchInput {
@@ -324,16 +330,6 @@ type User {
   name: String
   password: String!
   phone: String
-}
-
-input UserCreateInput {
-  email: String!
-  Member: MemberCreateManyWithoutUserInput
-  name: String
-  password: String!
-  phone: String
-  Player_Statistics: Player_StatisticsCreateManyWithoutUserInput
-  Team: TeamCreateManyWithoutUserInput
 }
 
 input UserCreateOneWithoutMemberInput {
