@@ -19,8 +19,8 @@ const User = objectType({
     t.model.id();
     t.model.name();
     t.model.email();
-    t.model.password();
     t.model.phone();
+    t.string("password", { nullable: true });
   },
 });
 
@@ -82,7 +82,6 @@ const Query = queryType({
 
 const Mutation = mutationType({
   definition(t) {
-    // t.crud.createOneUser({ alias: "signupUser" });
     t.crud.createOneTeam({ alias: "createOneTeam" });
     t.crud.createOneMatch();
 
@@ -96,34 +95,31 @@ const Mutation = mutationType({
         phone: stringArg(),
       },
       resolve: async (_, { email, name, password, phone }, ctx) => {
-        try {
-          const existingUser = await ctx.prisma.user.findOne({
-            where: {
-              email,
-            },
-          });
-          if (existingUser) {
-            throw new Error("ERROR: Username already used.");
-          }
-          var hash = bcrypt.hashSync(password, 10);
-
-          const user = await ctx.prisma.user.create({
-            data: {
-              email,
-              phone,
-              name,
-              password: hash,
-            },
-          });
-          const token = jwt.sign(user.email, TOKEN_SECRET);
-          return {
-            user: user,
-            token: token,
-          };
-        } catch (e) {
-          console.log(e);
-          return null;
+        const existingUser = await ctx.prisma.user.findOne({
+          where: {
+            email,
+          },
+        });
+        if (existingUser) {
+          throw new Error("ERROR: Username already used.");
         }
+        var hash = bcrypt.hashSync(password, 10);
+
+        const user = await ctx.prisma.user.create({
+          data: {
+            email,
+            phone,
+            name,
+            password: hash,
+          },
+        });
+        const token = jwt.sign(user.email, TOKEN_SECRET, { expiresIn });
+        const cloneUser = { ...user };
+        delete cloneUser.password;
+        return {
+          user: cloneUser,
+          token: token,
+        };
       },
     });
     t.field("login", {
@@ -134,31 +130,28 @@ const Mutation = mutationType({
         password: stringArg({ required: true }),
       },
       resolve: async (_, { email, password }, ctx) => {
-        try {
-          const existingUser = await ctx.prisma.user.findOne({
-            where: {
-              email,
-            },
-          });
-          if (!existingUser) {
-            throw new Error("ERROR: User not exist.");
-          }
-          var isValidPassword = bcrypt.compareSync(
-            password,
-            existingUser.password
-          );
-          if (isValidPassword) {
-            const token = jwt.sign(existingUser.email, TOKEN_SECRET);
-            return {
-              user: existingUser,
-              token: token,
-            };
-          }
-          return null;
-        } catch (e) {
-          console.log(e);
-          return null;
+        const existingUser = await ctx.prisma.user.findOne({
+          where: {
+            email,
+          },
+        });
+        if (!existingUser) {
+          throw new Error("ERROR: User not exist.");
         }
+        var isValidPassword = bcrypt.compareSync(
+          password,
+          existingUser.password
+        );
+        if (isValidPassword) {
+          const token = jwt.sign(existingUser.email, TOKEN_SECRET);
+          const cloneUser = { ...existingUser };
+          delete cloneUser.password;
+          return {
+            user: cloneUser,
+            token: token,
+          };
+        }
+        throw new Error("ERROR: Invalid password.");
       },
     });
   },

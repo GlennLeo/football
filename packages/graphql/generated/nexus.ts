@@ -340,7 +340,7 @@ export interface NexusGenRootTypes {
     email: string; // String!
     id: number; // Int!
     name?: string | null; // String
-    password: string; // String!
+    password?: string | null; // String
     phone?: string | null; // String
   }
 }
@@ -441,7 +441,7 @@ export interface NexusGenFieldTypes {
     email: string; // String!
     id: number; // Int!
     name: string | null; // String
-    password: string; // String!
+    password: string | null; // String
     phone: string | null; // String
   }
 }
