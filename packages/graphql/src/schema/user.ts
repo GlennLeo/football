@@ -13,6 +13,7 @@ export const User = objectType({
     t.model.name();
     t.model.email();
     t.model.phone();
+    t.model.address();
     t.string("password", { nullable: true });
   },
 });
@@ -65,8 +66,9 @@ export const UserMutation = extendType({
         name: stringArg(),
         password: stringArg({ required: true }),
         phone: stringArg(),
+        address: stringArg(),
       },
-      resolve: async (_, { email, name, password, phone }, ctx) => {
+      resolve: async (_, { email, name, password, phone, address }, ctx) => {
         const existingUser = await ctx.prisma.user.findOne({
           where: {
             email,
@@ -83,6 +85,7 @@ export const UserMutation = extendType({
             phone,
             name,
             password: hash,
+            address,
           },
         });
         const token = jwt.sign(

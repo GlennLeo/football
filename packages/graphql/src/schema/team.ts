@@ -9,9 +9,9 @@ export const Team = objectType({
     t.model.logo();
     t.model.description();
     t.model.win();
-    t.model.loose();
+    t.model.loss();
     t.model.home();
-    t.model.creatorId();
+    t.model.creator_id();
   },
 });
 
@@ -38,6 +38,34 @@ export const TeamQuery = extendType({
 export const TeamMutation = extendType({
   type: "Mutation",
   definition(t) {
-    t.crud.createOneTeam({ alias: "createOneTeam" });
+    t.field("createNewTeam", {
+      type: Team,
+      nullable: true,
+      args: {
+        name: stringArg({ required: true }),
+        logo: stringArg(),
+        description: stringArg(),
+        home: stringArg(),
+      },
+      resolve: async (_, { name, logo, description, home }, ctx) => {
+        if (!ctx.authUser) {
+          throw new Error("Unauthorized!!!");
+        }
+        const team = await ctx.prisma.team.create({
+          data: {
+            name,
+            logo,
+            description,
+            home,
+            user: {
+              connect: {
+                id: ctx.authUser.id,
+              },
+            },
+          },
+        });
+        return team;
+      },
+    });
   },
 });

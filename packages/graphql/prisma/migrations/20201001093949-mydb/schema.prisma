@@ -4,27 +4,27 @@ generator client {
 
 datasource db {
   provider = "mysql"
-  url      = env("DATABASE_URL")
+  url = "***"
 }
 
 model Match {
-  id                       Int            @default(autoincrement()) @id
+  id                       Int             @default(autoincrement()) @id
   home_id                  Int?
   away_id                  Int?
   time                     DateTime?
   field                    String?
   location                 String?
-  created_at               DateTime?      @default(now())
-  updated_at               DateTime?      @default(now())
-  team_match_away_idToteam Team?          @relation("match_away_idToteam", fields: [away_id], references: [id])
-  team_match_home_idToteam Team?          @relation("match_home_idToteam", fields: [home_id], references: [id])
+  created_at               DateTime?       @default(now())
+  updated_at               DateTime?       @default(now())
+  team_match_away_idToteam Team?           @relation("match_away_idToteam", fields: [away_id], references: [id])
+  team_match_home_idToteam Team?           @relation("match_home_idToteam", fields: [home_id], references: [id])
   match_report             MatchReport?
-  player_report            PlayerReport[] @relation("matchToplayer_report")
+  player_report            PlayerReport[]
 
   @@index([away_id], name: "guestId_idx")
   @@index([home_id], name: "homeId_idx")
   @@index([id], name: "id")
-  @@map("match")
+  @@map(name: "match")
 }
 
 model MatchReport {
@@ -39,61 +39,61 @@ model MatchReport {
 
   @@index([loss_id], name: "lossId_idx")
   @@index([winner_id], name: "winnerId_idx")
-  @@map("match_report")
+  @@map(name: "match_report")
 }
 
 model Member {
   id        Int          @default(autoincrement()) @id
   member_id Int
   team_id   Int
-  role      member_role? @default(MEMBER)
+  role      MemberRole? @default(MEMBER)
   cash      Int?
   user      User         @relation(fields: [member_id], references: [id])
   team      Team         @relation(fields: [team_id], references: [id])
 
   @@index([member_id], name: "memberId_idx")
   @@index([team_id], name: "teamId_idx")
-  @@map("member")
+  @@map(name: "member")
 }
 
 model PlayerReport {
-  matchId   Int
+  match_id   Int
   id        Int   @default(autoincrement()) @id
   player_id Int
   score     Int?
   assist    Int?
-  match     Match @relation("matchToplayer_report", fields: [matchId], references: [id])
+  match     Match @relation(fields: [match_id], references: [id])
   user      User  @relation(fields: [player_id], references: [id])
 
-  @@index([matchId], name: "pl_match")
+  @@index([match_id], name: "pl_match")
   @@index([player_id], name: "playerId_idx")
-  @@map("player_report")
+  @@map(name: "player_report")
 }
 
 model Team {
-  id                                        Int           @default(autoincrement()) @id
+  id                                        Int            @default(autoincrement()) @id
   name                                      String
-  logo                                      String?
+  logo                                      String
   description                               String?
-  win                                       Int?          @default(0)
-  loss                                      Int?          @default(0)
+  win                                       Int?           @default(0)
+  loss                                      Int?           @default(0)
   home                                      String?
-  creator_id                                Int?
-  user                                      User?         @relation(fields: [creator_id], references: [id])
-  match_match_away_idToteam                 Match[]       @relation("match_away_idToteam")
-  match_match_home_idToteam                 Match[]       @relation("match_home_idToteam")
+  creator_id                                Int
+  user                                      User           @relation(fields: [creator_id], references: [id])
+  match_match_away_idToteam                 Match[]        @relation("match_away_idToteam")
+  match_match_home_idToteam                 Match[]        @relation("match_home_idToteam")
   match_report_match_report_loss_idToteam   MatchReport[] @relation("match_report_loss_idToteam")
   match_report_match_report_winner_idToteam MatchReport[] @relation("match_report_winner_idToteam")
   member                                    Member[]
 
   @@index([creator_id], name: "creatorId_idx")
-  @@map("team")
+  @@map(name: "team")
 }
 
 model User {
-  id            Int            @default(autoincrement()) @id
+  id            Int             @default(autoincrement()) @id
   name          String?
-  email         String         @unique
+  email         String          @unique
   password      String
   phone         String?
   address       String?
@@ -101,10 +101,10 @@ model User {
   player_report PlayerReport[]
   team          Team[]
 
-  @@map("user")
+  @@map(name: "user")
 }
 
-enum member_role {
+enum MemberRole {
   MANAGER
   MEMBER
   PENDING
