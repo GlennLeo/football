@@ -57,15 +57,15 @@ model Member {
 }
 
 model PlayerReport {
-  matchId   Int
+  match_id  Int
   id        Int   @default(autoincrement()) @id
   player_id Int
   score     Int?
   assist    Int?
-  match     Match @relation("matchToplayer_report", fields: [matchId], references: [id])
+  match     Match @relation("matchToplayer_report", fields: [match_id], references: [id])
   user      User  @relation(fields: [player_id], references: [id])
 
-  @@index([matchId], name: "pl_match")
+  @@index([match_id], name: "pl_match")
   @@index([player_id], name: "playerId_idx")
   @@map("player_report")
 }
