@@ -5,8 +5,8 @@ export const Member = objectType({
   name: "Member",
   definition(t) {
     t.model.id();
-    t.model.member_id();
-    t.model.team_id();
+    t.model.user();
+    t.model.team();
     t.model.role();
     t.model.cash();
   },

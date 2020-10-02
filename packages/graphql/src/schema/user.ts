@@ -14,6 +14,7 @@ export const UserAccount = objectType({
     t.model("User").email();
     t.model("User").phone();
     t.model("User").address();
+    t.list.field("teams", { type: "Team", nullable: true });
     t.string("password", { nullable: false });
   },
 });
@@ -26,6 +27,7 @@ export const User = objectType({
     t.model.email();
     t.model.phone();
     t.model.address();
+    t.model.team({ alias: "teams" });
   },
 });
 
@@ -45,9 +47,7 @@ export const UserQuery = extendType({
           throw new Error("Unauthorized!!!");
         }
         const user = await originalResolver(_, args, ctx, info);
-        const refactorUser = { ...user };
-        delete refactorUser.password;
-        return refactorUser;
+        return user;
       },
     });
     t.crud.users({
@@ -56,11 +56,7 @@ export const UserQuery = extendType({
           throw new Error("Unauthorized!!!");
         }
         const users = await originalResolver(_, args, ctx, info);
-        const refactorUser = users.map((user) => {
-          delete user.password;
-          return user;
-        });
-        return refactorUser;
+        return users;
       },
     });
   },
@@ -104,10 +100,8 @@ export const UserMutation = extendType({
           config.TOKEN_SECRET,
           { expiresIn }
         );
-        const refactorUser = { ...user };
-        delete refactorUser.password;
         return {
-          user: refactorUser,
+          user,
           token: token,
         };
       },
@@ -138,10 +132,16 @@ export const UserMutation = extendType({
             config.TOKEN_SECRET,
             { expiresIn }
           );
-          const refactorUser = { ...existingUser };
-          delete refactorUser.password;
+          let members = await ctx.prisma.member.findMany({
+            where: { member_id: existingUser.id },
+            include: {
+              team: true,
+            },
+          });
+          const teams = members.map((item) => item.team);
+          const user = { ...existingUser, teams };
           return {
-            user: refactorUser,
+            user,
             token: token,
           };
         }

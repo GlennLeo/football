@@ -52,6 +52,7 @@ export const TeamMutation = extendType({
         if (!ctx.authUser) {
           throw new Error("Unauthorized!!!");
         }
+        // Create a team
         const team = await ctx.prisma.team.create({
           data: {
             name,
@@ -61,6 +62,21 @@ export const TeamMutation = extendType({
             user: {
               connect: {
                 id: ctx.authUser.id,
+              },
+            },
+          },
+        });
+        // Creator will be a member of that team too
+        await ctx.prisma.member.create({
+          data: {
+            user: {
+              connect: {
+                id: team.creator_id,
+              },
+            },
+            team: {
+              connect: {
+                id: team.id,
               },
             },
           },

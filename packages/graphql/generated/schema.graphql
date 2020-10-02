@@ -163,9 +163,9 @@ input MatchWhereUniqueInput {
 type Member {
   cash: Int
   id: Int!
-  member_id: Int!
   role: member_role
-  team_id: Int!
+  team: Team!
+  user: User!
 }
 
 enum member_role {
@@ -414,6 +414,7 @@ type User {
   id: Int!
   name: String
   phone: String
+  teams(after: TeamWhereUniqueInput, before: TeamWhereUniqueInput, first: Int, last: Int): [Team!]!
 }
 
 type UserAccount {
@@ -423,6 +424,7 @@ type UserAccount {
   name: String
   password: String!
   phone: String
+  teams: [Team!]
 }
 
 input UserCreateOneWithoutMemberInput {

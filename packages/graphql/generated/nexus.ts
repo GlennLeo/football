@@ -377,9 +377,7 @@ export interface NexusGenRootTypes {
   Member: { // root type
     cash?: number | null; // Int
     id: number; // Int!
-    member_id: number; // Int!
     role?: NexusGenEnums['member_role'] | null; // member_role
-    team_id: number; // Int!
   }
   Mutation: {};
   PlayerReport: { // root type
@@ -413,6 +411,7 @@ export interface NexusGenRootTypes {
     name?: string | null; // String
     password: string; // String!
     phone?: string | null; // String
+    teams?: NexusGenRootTypes['Team'][] | null; // [Team!]
   }
 }
 
@@ -500,9 +499,9 @@ export interface NexusGenFieldTypes {
   Member: { // field return type
     cash: number | null; // Int
     id: number; // Int!
-    member_id: number; // Int!
     role: NexusGenEnums['member_role'] | null; // member_role
-    team_id: number; // Int!
+    team: NexusGenRootTypes['Team']; // Team!
+    user: NexusGenRootTypes['User']; // User!
   }
   Mutation: { // field return type
     createNewMatch: NexusGenRootTypes['Match']; // Match!
@@ -551,6 +550,7 @@ export interface NexusGenFieldTypes {
     id: number; // Int!
     name: string | null; // String
     phone: string | null; // String
+    teams: NexusGenRootTypes['Team'][]; // [Team!]!
   }
   UserAccount: { // field return type
     address: string | null; // String
@@ -559,6 +559,7 @@ export interface NexusGenFieldTypes {
     name: string | null; // String
     password: string; // String!
     phone: string | null; // String
+    teams: NexusGenRootTypes['Team'][] | null; // [Team!]
   }
 }
 
@@ -651,6 +652,14 @@ export interface NexusGenArgTypes {
     members: { // args
       after?: NexusGenInputs['MemberWhereUniqueInput'] | null; // MemberWhereUniqueInput
       before?: NexusGenInputs['MemberWhereUniqueInput'] | null; // MemberWhereUniqueInput
+      first?: number | null; // Int
+      last?: number | null; // Int
+    }
+  }
+  User: {
+    teams: { // args
+      after?: NexusGenInputs['TeamWhereUniqueInput'] | null; // TeamWhereUniqueInput
+      before?: NexusGenInputs['TeamWhereUniqueInput'] | null; // TeamWhereUniqueInput
       first?: number | null; // Int
       last?: number | null; // Int
     }
