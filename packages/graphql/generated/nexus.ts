@@ -391,7 +391,6 @@ export interface NexusGenRootTypes {
   }
   Query: {};
   Team: { // root type
-    creator_id?: number | null; // Int
     description?: string | null; // String
     home?: string | null; // String
     id: number; // Int!
@@ -405,7 +404,14 @@ export interface NexusGenRootTypes {
     email: string; // String!
     id: number; // Int!
     name?: string | null; // String
-    password?: string | null; // String
+    phone?: string | null; // String
+  }
+  UserAccount: { // root type
+    address?: string | null; // String
+    email: string; // String!
+    id: number; // Int!
+    name?: string | null; // String
+    password: string; // String!
     phone?: string | null; // String
   }
 }
@@ -473,7 +479,7 @@ export interface NexusGenAllTypes extends NexusGenRootTypes {
 export interface NexusGenFieldTypes {
   AuthUser: { // field return type
     token: string; // String!
-    user: NexusGenRootTypes['User']; // User!
+    user: NexusGenRootTypes['UserAccount']; // UserAccount!
   }
   Match: { // field return type
     away_id: number | null; // Int
@@ -529,12 +535,13 @@ export interface NexusGenFieldTypes {
     users: NexusGenRootTypes['User'][]; // [User!]!
   }
   Team: { // field return type
-    creator_id: number | null; // Int
+    creator: NexusGenRootTypes['User'] | null; // User
     description: string | null; // String
     home: string | null; // String
     id: number; // Int!
     logo: string | null; // String
     loss: number | null; // Int
+    members: NexusGenRootTypes['Member'][]; // [Member!]!
     name: string; // String!
     win: number | null; // Int
   }
@@ -543,7 +550,14 @@ export interface NexusGenFieldTypes {
     email: string; // String!
     id: number; // Int!
     name: string | null; // String
-    password: string | null; // String
+    phone: string | null; // String
+  }
+  UserAccount: { // field return type
+    address: string | null; // String
+    email: string; // String!
+    id: number; // Int!
+    name: string | null; // String
+    password: string; // String!
     phone: string | null; // String
   }
 }
@@ -633,6 +647,14 @@ export interface NexusGenArgTypes {
       last?: number | null; // Int
     }
   }
+  Team: {
+    members: { // args
+      after?: NexusGenInputs['MemberWhereUniqueInput'] | null; // MemberWhereUniqueInput
+      before?: NexusGenInputs['MemberWhereUniqueInput'] | null; // MemberWhereUniqueInput
+      first?: number | null; // Int
+      last?: number | null; // Int
+    }
+  }
 }
 
 export interface NexusGenAbstractResolveReturnTypes {
@@ -640,7 +662,7 @@ export interface NexusGenAbstractResolveReturnTypes {
 
 export interface NexusGenInheritedFields {}
 
-export type NexusGenObjectNames = "AuthUser" | "Match" | "MatchReport" | "Member" | "Mutation" | "PlayerReport" | "Query" | "Team" | "User";
+export type NexusGenObjectNames = "AuthUser" | "Match" | "MatchReport" | "Member" | "Mutation" | "PlayerReport" | "Query" | "Team" | "User" | "UserAccount";
 
 export type NexusGenInputNames = "MatchCreateInput" | "MatchCreateManyWithoutTeam_match_away_idToteamInput" | "MatchCreateManyWithoutTeam_match_home_idToteamInput" | "MatchCreateOneWithoutMatch_reportInput" | "MatchCreateOneWithoutPlayer_reportInput" | "MatchCreateWithoutMatch_reportInput" | "MatchCreateWithoutPlayer_reportInput" | "MatchCreateWithoutTeam_match_away_idToteamInput" | "MatchCreateWithoutTeam_match_home_idToteamInput" | "MatchReportCreateInput" | "MatchReportCreateManyWithoutTeam_match_report_loss_idToteamInput" | "MatchReportCreateManyWithoutTeam_match_report_winner_idToteamInput" | "MatchReportCreateOneWithoutMatchInput" | "MatchReportCreateWithoutMatchInput" | "MatchReportCreateWithoutTeam_match_report_loss_idToteamInput" | "MatchReportCreateWithoutTeam_match_report_winner_idToteamInput" | "MatchReportWhereUniqueInput" | "MatchWhereUniqueInput" | "MemberCreateInput" | "MemberCreateManyWithoutTeamInput" | "MemberCreateManyWithoutUserInput" | "MemberCreateWithoutTeamInput" | "MemberCreateWithoutUserInput" | "MemberWhereUniqueInput" | "PlayerReportCreateInput" | "PlayerReportCreateManyWithoutMatchInput" | "PlayerReportCreateManyWithoutUserInput" | "PlayerReportCreateWithoutMatchInput" | "PlayerReportCreateWithoutUserInput" | "PlayerReportWhereUniqueInput" | "TeamCreateManyWithoutUserInput" | "TeamCreateOneWithoutMatch_match_away_idToteamInput" | "TeamCreateOneWithoutMatch_match_home_idToteamInput" | "TeamCreateOneWithoutMatch_report_match_report_loss_idToteamInput" | "TeamCreateOneWithoutMatch_report_match_report_winner_idToteamInput" | "TeamCreateOneWithoutMemberInput" | "TeamCreateWithoutMatch_match_away_idToteamInput" | "TeamCreateWithoutMatch_match_home_idToteamInput" | "TeamCreateWithoutMatch_report_match_report_loss_idToteamInput" | "TeamCreateWithoutMatch_report_match_report_winner_idToteamInput" | "TeamCreateWithoutMemberInput" | "TeamCreateWithoutUserInput" | "TeamWhereUniqueInput" | "UserCreateOneWithoutMemberInput" | "UserCreateOneWithoutPlayer_reportInput" | "UserCreateOneWithoutTeamInput" | "UserCreateWithoutMemberInput" | "UserCreateWithoutPlayer_reportInput" | "UserCreateWithoutTeamInput" | "UserWhereUniqueInput";
 

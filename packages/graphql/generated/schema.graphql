@@ -4,7 +4,7 @@
 
 type AuthUser {
   token: String!
-  user: User!
+  user: UserAccount!
 }
 
 scalar DateTime
@@ -278,12 +278,13 @@ type Query {
 }
 
 type Team {
-  creator_id: Int
+  creator: User
   description: String
   home: String
   id: Int!
   logo: String
   loss: Int
+  members(after: MemberWhereUniqueInput, before: MemberWhereUniqueInput, first: Int, last: Int): [Member!]!
   name: String!
   win: Int
 }
@@ -412,7 +413,15 @@ type User {
   email: String!
   id: Int!
   name: String
-  password: String
+  phone: String
+}
+
+type UserAccount {
+  address: String
+  email: String!
+  id: Int!
+  name: String
+  password: String!
   phone: String
 }
 

@@ -6,6 +6,18 @@ import { config } from "../../config";
 
 const expiresIn = "1 day";
 
+export const UserAccount = objectType({
+  name: "UserAccount",
+  definition(t) {
+    t.model("User").id();
+    t.model("User").name();
+    t.model("User").email();
+    t.model("User").phone();
+    t.model("User").address();
+    t.string("password", { nullable: false });
+  },
+});
+
 export const User = objectType({
   name: "User",
   definition(t) {
@@ -14,14 +26,13 @@ export const User = objectType({
     t.model.email();
     t.model.phone();
     t.model.address();
-    t.string("password", { nullable: true });
   },
 });
 
 export const AuthUser = objectType({
   name: "AuthUser",
   definition(t) {
-    t.field("user", { type: "User" }), t.string("token");
+    t.field("user", { type: "UserAccount" }), t.string("token");
   },
 });
 

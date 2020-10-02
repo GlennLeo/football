@@ -11,7 +11,8 @@ export const Team = objectType({
     t.model.win();
     t.model.loss();
     t.model.home();
-    t.model.creator_id();
+    t.model.user({ alias: "creator" });
+    t.model.member({ alias: "members" });
   },
 });
 
