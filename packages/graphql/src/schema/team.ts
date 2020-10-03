@@ -79,6 +79,7 @@ export const TeamMutation = extendType({
                 id: team.id,
               },
             },
+            role: "MANAGER",
           },
         });
         return team;

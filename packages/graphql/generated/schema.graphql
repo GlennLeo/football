@@ -10,26 +10,21 @@ type AuthUser {
 scalar DateTime
 
 type Match {
-  away_id: Int
+  away: Team!
   created_at: DateTime
   field: String
-  home_id: Int
+  home: Team!
   id: Int!
   location: String
+  status: match_status
   time: DateTime
   updated_at: DateTime
 }
 
-input MatchCreateInput {
-  created_at: DateTime
-  field: String
-  location: String
-  match_report: MatchReportCreateOneWithoutMatchInput
-  player_report: PlayerReportCreateManyWithoutMatchInput
-  team_match_away_idToteam: TeamCreateOneWithoutMatch_match_away_idToteamInput
-  team_match_home_idToteam: TeamCreateOneWithoutMatch_match_home_idToteamInput
-  time: DateTime
-  updated_at: DateTime
+enum match_status {
+  DEAL
+  DONE
+  PENDING
 }
 
 input MatchCreateManyWithoutTeam_match_away_idToteamInput {
@@ -57,8 +52,9 @@ input MatchCreateWithoutMatch_reportInput {
   field: String
   location: String
   player_report: PlayerReportCreateManyWithoutMatchInput
+  status: match_status
   team_match_away_idToteam: TeamCreateOneWithoutMatch_match_away_idToteamInput
-  team_match_home_idToteam: TeamCreateOneWithoutMatch_match_home_idToteamInput
+  team_match_home_idToteam: TeamCreateOneWithoutMatch_match_home_idToteamInput!
   time: DateTime
   updated_at: DateTime
 }
@@ -68,8 +64,9 @@ input MatchCreateWithoutPlayer_reportInput {
   field: String
   location: String
   match_report: MatchReportCreateOneWithoutMatchInput
+  status: match_status
   team_match_away_idToteam: TeamCreateOneWithoutMatch_match_away_idToteamInput
-  team_match_home_idToteam: TeamCreateOneWithoutMatch_match_home_idToteamInput
+  team_match_home_idToteam: TeamCreateOneWithoutMatch_match_home_idToteamInput!
   time: DateTime
   updated_at: DateTime
 }
@@ -80,7 +77,8 @@ input MatchCreateWithoutTeam_match_away_idToteamInput {
   location: String
   match_report: MatchReportCreateOneWithoutMatchInput
   player_report: PlayerReportCreateManyWithoutMatchInput
-  team_match_home_idToteam: TeamCreateOneWithoutMatch_match_home_idToteamInput
+  status: match_status
+  team_match_home_idToteam: TeamCreateOneWithoutMatch_match_home_idToteamInput!
   time: DateTime
   updated_at: DateTime
 }
@@ -91,24 +89,18 @@ input MatchCreateWithoutTeam_match_home_idToteamInput {
   location: String
   match_report: MatchReportCreateOneWithoutMatchInput
   player_report: PlayerReportCreateManyWithoutMatchInput
+  status: match_status
   team_match_away_idToteam: TeamCreateOneWithoutMatch_match_away_idToteamInput
   time: DateTime
   updated_at: DateTime
 }
 
 type MatchReport {
-  loss_id: Int
-  match_id: Int!
-  result: String
-  winner_id: Int
-}
-
-input MatchReportCreateInput {
   id: Int!
-  match: MatchCreateOneWithoutMatch_reportInput!
+  loss: Team!
+  match: Match!
   result: String
-  team_match_report_loss_idToteam: TeamCreateOneWithoutMatch_report_match_report_loss_idToteamInput
-  team_match_report_winner_idToteam: TeamCreateOneWithoutMatch_report_match_report_winner_idToteamInput
+  winner: Team!
 }
 
 input MatchReportCreateManyWithoutTeam_match_report_loss_idToteamInput {
@@ -127,21 +119,18 @@ input MatchReportCreateOneWithoutMatchInput {
 }
 
 input MatchReportCreateWithoutMatchInput {
-  id: Int!
   result: String
   team_match_report_loss_idToteam: TeamCreateOneWithoutMatch_report_match_report_loss_idToteamInput
   team_match_report_winner_idToteam: TeamCreateOneWithoutMatch_report_match_report_winner_idToteamInput
 }
 
 input MatchReportCreateWithoutTeam_match_report_loss_idToteamInput {
-  id: Int!
   match: MatchCreateOneWithoutMatch_reportInput!
   result: String
   team_match_report_winner_idToteam: TeamCreateOneWithoutMatch_report_match_report_winner_idToteamInput
 }
 
 input MatchReportCreateWithoutTeam_match_report_winner_idToteamInput {
-  id: Int!
   match: MatchCreateOneWithoutMatch_reportInput!
   result: String
   team_match_report_loss_idToteam: TeamCreateOneWithoutMatch_report_match_report_loss_idToteamInput
@@ -210,10 +199,10 @@ input MemberWhereUniqueInput {
 }
 
 type Mutation {
-  createNewMatch(data: MatchCreateInput!): Match!
-  createNewMatchReport(data: MatchReportCreateInput!): MatchReport!
+  createNewMatch(away_id: Int, field: String!, home_id: Int!, location: String!): Match!
+  createNewMatchReport(loss_id: Int!, match_id: Int!, result: String!, winner_id: Int!): MatchReport!
   createNewMember(data: MemberCreateInput!): Member!
-  createNewPlayerReport(data: PlayerReportCreateInput!): PlayerReport!
+  createNewPlayerReport(assist: Int!, match_id: Int!, score: Int!, user_id: Int!): PlayerReport!
   createNewTeam(description: String, home: String, logo: String, name: String!): Team
   login(email: String!, password: String!): AuthUser
   signup(address: String, email: String!, name: String, password: String!, phone: String): AuthUser
@@ -222,16 +211,9 @@ type Mutation {
 type PlayerReport {
   assist: Int
   id: Int!
-  match_id: Int!
-  player_id: Int!
+  match: Match!
   score: Int
-}
-
-input PlayerReportCreateInput {
-  assist: Int
-  match: MatchCreateOneWithoutPlayer_reportInput!
-  score: Int
-  user: UserCreateOneWithoutPlayer_reportInput!
+  user: User!
 }
 
 input PlayerReportCreateManyWithoutMatchInput {
@@ -258,7 +240,7 @@ input PlayerReportCreateWithoutUserInput {
 
 input PlayerReportWhereUniqueInput {
   id: Int
-  match_id: Int
+  matchId: Int
   player_id: Int
 }
 

@@ -1,17 +1,18 @@
 /// <reference path="../../generated/nexus.ts" />
-import { extendType, objectType } from "@nexus/schema";
+import { extendType, intArg, objectType, stringArg } from "@nexus/schema";
 
 export const Match = objectType({
   name: "Match",
   definition(t) {
     t.model.id();
-    t.model.home_id();
-    t.model.away_id();
     t.model.field();
     t.model.location();
     t.model.time();
+    t.model.status();
     t.model.created_at();
     t.model.updated_at();
+    t.field("home", { type: "Team" });
+    t.field("away", { type: "Team" });
   },
 });
 
@@ -26,6 +27,47 @@ export const MatchQuery = extendType({
 export const MatchMutation = extendType({
   type: "Mutation",
   definition(t) {
-    t.crud.createOneMatch({ alias: "createNewMatch" });
+    t.field("createNewMatch", {
+      type: Match,
+      args: {
+        away_id: intArg({ nullable: true }),
+        home_id: intArg({ nullable: false }),
+        field: stringArg({ nullable: false }),
+        location: stringArg({ nullable: false }),
+      },
+      resolve: async (_, { away_id, home_id, field, location }, ctx) => {
+        if (!ctx.authUser) {
+          throw new Error("Unauthorized!!!");
+        }
+        const match = await ctx.prisma.match.create({
+          data: {
+            team_match_away_idToteam: {
+              connect: {
+                id: away_id,
+              },
+            },
+            team_match_home_idToteam: {
+              connect: {
+                id: home_id,
+              },
+            },
+            field,
+            location,
+            time: new Date(),
+            created_at: new Date(),
+            updated_at: new Date(),
+          },
+          include: {
+            team_match_away_idToteam: true,
+            team_match_home_idToteam: true,
+          },
+        });
+        return {
+          ...match,
+          home: match.team_match_home_idToteam,
+          away: match.team_match_away_idToteam,
+        };
+      },
+    });
   },
 });

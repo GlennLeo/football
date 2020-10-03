@@ -26,8 +26,8 @@ interface PrismaModels {
 interface NexusPrismaInputs {
   Query: {
     matches: {
-      filtering: 'AND' | 'OR' | 'NOT' | 'id' | 'home_id' | 'away_id' | 'time' | 'field' | 'location' | 'created_at' | 'updated_at' | 'team_match_away_idToteam' | 'team_match_home_idToteam' | 'match_report' | 'player_report'
-      ordering: 'id' | 'home_id' | 'away_id' | 'time' | 'field' | 'location' | 'created_at' | 'updated_at'
+      filtering: 'AND' | 'OR' | 'NOT' | 'id' | 'home_id' | 'away_id' | 'time' | 'field' | 'location' | 'status' | 'created_at' | 'updated_at' | 'team_match_away_idToteam' | 'team_match_home_idToteam' | 'match_report' | 'player_report'
+      ordering: 'id' | 'home_id' | 'away_id' | 'time' | 'field' | 'location' | 'status' | 'created_at' | 'updated_at'
     }
     matchReports: {
       filtering: 'AND' | 'OR' | 'NOT' | 'id' | 'match_id' | 'result' | 'winner_id' | 'loss_id' | 'team_match_report_loss_idToteam' | 'match' | 'team_match_report_winner_idToteam'
@@ -38,8 +38,8 @@ interface NexusPrismaInputs {
       ordering: 'id' | 'member_id' | 'team_id' | 'role' | 'cash'
     }
     playerReports: {
-      filtering: 'AND' | 'OR' | 'NOT' | 'match_id' | 'id' | 'player_id' | 'score' | 'assist' | 'match' | 'user'
-      ordering: 'match_id' | 'id' | 'player_id' | 'score' | 'assist'
+      filtering: 'AND' | 'OR' | 'NOT' | 'matchId' | 'id' | 'player_id' | 'score' | 'assist' | 'match' | 'user'
+      ordering: 'matchId' | 'id' | 'player_id' | 'score' | 'assist'
     }
     teams: {
       filtering: 'AND' | 'OR' | 'NOT' | 'id' | 'name' | 'logo' | 'description' | 'win' | 'loss' | 'home' | 'creator_id' | 'user' | 'match_match_away_idToteam' | 'match_match_home_idToteam' | 'match_report_match_report_loss_idToteam' | 'match_report_match_report_winner_idToteam' | 'member'
@@ -52,8 +52,8 @@ interface NexusPrismaInputs {
   },
   Match: {
     player_report: {
-      filtering: 'AND' | 'OR' | 'NOT' | 'match_id' | 'id' | 'player_id' | 'score' | 'assist' | 'match' | 'user'
-      ordering: 'match_id' | 'id' | 'player_id' | 'score' | 'assist'
+      filtering: 'AND' | 'OR' | 'NOT' | 'matchId' | 'id' | 'player_id' | 'score' | 'assist' | 'match' | 'user'
+      ordering: 'matchId' | 'id' | 'player_id' | 'score' | 'assist'
     }
   }
   MatchReport: {
@@ -67,12 +67,12 @@ interface NexusPrismaInputs {
   }
   Team: {
     match_match_away_idToteam: {
-      filtering: 'AND' | 'OR' | 'NOT' | 'id' | 'home_id' | 'away_id' | 'time' | 'field' | 'location' | 'created_at' | 'updated_at' | 'team_match_away_idToteam' | 'team_match_home_idToteam' | 'match_report' | 'player_report'
-      ordering: 'id' | 'home_id' | 'away_id' | 'time' | 'field' | 'location' | 'created_at' | 'updated_at'
+      filtering: 'AND' | 'OR' | 'NOT' | 'id' | 'home_id' | 'away_id' | 'time' | 'field' | 'location' | 'status' | 'created_at' | 'updated_at' | 'team_match_away_idToteam' | 'team_match_home_idToteam' | 'match_report' | 'player_report'
+      ordering: 'id' | 'home_id' | 'away_id' | 'time' | 'field' | 'location' | 'status' | 'created_at' | 'updated_at'
     }
     match_match_home_idToteam: {
-      filtering: 'AND' | 'OR' | 'NOT' | 'id' | 'home_id' | 'away_id' | 'time' | 'field' | 'location' | 'created_at' | 'updated_at' | 'team_match_away_idToteam' | 'team_match_home_idToteam' | 'match_report' | 'player_report'
-      ordering: 'id' | 'home_id' | 'away_id' | 'time' | 'field' | 'location' | 'created_at' | 'updated_at'
+      filtering: 'AND' | 'OR' | 'NOT' | 'id' | 'home_id' | 'away_id' | 'time' | 'field' | 'location' | 'status' | 'created_at' | 'updated_at' | 'team_match_away_idToteam' | 'team_match_home_idToteam' | 'match_report' | 'player_report'
+      ordering: 'id' | 'home_id' | 'away_id' | 'time' | 'field' | 'location' | 'status' | 'created_at' | 'updated_at'
     }
     match_report_match_report_loss_idToteam: {
       filtering: 'AND' | 'OR' | 'NOT' | 'id' | 'match_id' | 'result' | 'winner_id' | 'loss_id' | 'team_match_report_loss_idToteam' | 'match' | 'team_match_report_winner_idToteam'
@@ -93,8 +93,8 @@ interface NexusPrismaInputs {
       ordering: 'id' | 'member_id' | 'team_id' | 'role' | 'cash'
     }
     player_report: {
-      filtering: 'AND' | 'OR' | 'NOT' | 'match_id' | 'id' | 'player_id' | 'score' | 'assist' | 'match' | 'user'
-      ordering: 'match_id' | 'id' | 'player_id' | 'score' | 'assist'
+      filtering: 'AND' | 'OR' | 'NOT' | 'matchId' | 'id' | 'player_id' | 'score' | 'assist' | 'match' | 'user'
+      ordering: 'matchId' | 'id' | 'player_id' | 'score' | 'assist'
     }
     team: {
       filtering: 'AND' | 'OR' | 'NOT' | 'id' | 'name' | 'logo' | 'description' | 'win' | 'loss' | 'home' | 'creator_id' | 'user' | 'match_match_away_idToteam' | 'match_match_home_idToteam' | 'match_report_match_report_loss_idToteam' | 'match_report_match_report_winner_idToteam' | 'member'
@@ -164,6 +164,7 @@ interface NexusPrismaOutputs {
     time: 'DateTime'
     field: 'String'
     location: 'String'
+    status: 'match_status'
     created_at: 'DateTime'
     updated_at: 'DateTime'
     team_match_away_idToteam: 'Team'
@@ -191,7 +192,7 @@ interface NexusPrismaOutputs {
     team: 'Team'
   }
   PlayerReport: {
-    match_id: 'Int'
+    matchId: 'Int'
     id: 'Int'
     player_id: 'Int'
     score: 'Int'

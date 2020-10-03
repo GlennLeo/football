@@ -9,15 +9,16 @@ datasource db {
 
 model Match {
   id                       Int            @default(autoincrement()) @id
-  home_id                  Int?
+  home_id                  Int
   away_id                  Int?
   time                     DateTime?
   field                    String?
   location                 String?
+  status                   match_status?  @default(PENDING)
   created_at               DateTime?      @default(now())
   updated_at               DateTime?      @default(now())
   team_match_away_idToteam Team?          @relation("match_away_idToteam", fields: [away_id], references: [id])
-  team_match_home_idToteam Team?          @relation("match_home_idToteam", fields: [home_id], references: [id])
+  team_match_home_idToteam Team           @relation("match_home_idToteam", fields: [home_id], references: [id])
   match_report             MatchReport?
   player_report            PlayerReport[] @relation("matchToplayer_report")
 
@@ -28,7 +29,7 @@ model Match {
 }
 
 model MatchReport {
-  id                                Int     @id
+  id                                Int     @default(autoincrement()) @id
   match_id                          Int     @unique
   result                            String?
   winner_id                         Int?
@@ -57,15 +58,15 @@ model Member {
 }
 
 model PlayerReport {
-  match_id  Int
+  matchId   Int
   id        Int   @default(autoincrement()) @id
   player_id Int
   score     Int?
   assist    Int?
-  match     Match @relation("matchToplayer_report", fields: [match_id], references: [id])
+  match     Match @relation("matchToplayer_report", fields: [matchId], references: [id])
   user      User  @relation(fields: [player_id], references: [id])
 
-  @@index([match_id], name: "pl_match")
+  @@index([matchId], name: "pl_match")
   @@index([player_id], name: "playerId_idx")
   @@map("player_report")
 }
@@ -108,4 +109,10 @@ enum member_role {
   MANAGER
   MEMBER
   PENDING
+}
+
+enum match_status {
+  PENDING
+  DEAL
+  DONE
 }
