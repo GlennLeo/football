@@ -51,6 +51,7 @@ export interface NexusGenInputs {
 }
 
 export interface NexusGenEnums {
+  MemberRole: "MANAGER" | "MEMBER" | "PENDING"
   match_status: "DEAL" | "DONE" | "PENDING"
   member_role: "MANAGER" | "MEMBER" | "PENDING"
 }
@@ -129,6 +130,7 @@ export interface NexusGenAllTypes extends NexusGenRootTypes {
   PlayerReportWhereUniqueInput: NexusGenInputs['PlayerReportWhereUniqueInput'];
   TeamWhereUniqueInput: NexusGenInputs['TeamWhereUniqueInput'];
   UserWhereUniqueInput: NexusGenInputs['UserWhereUniqueInput'];
+  MemberRole: NexusGenEnums['MemberRole'];
   match_status: NexusGenEnums['match_status'];
   member_role: NexusGenEnums['member_role'];
   String: NexusGenScalars['String'];
@@ -245,7 +247,7 @@ export interface NexusGenArgTypes {
     }
     createNewMember: { // args
       cash: number; // Int!
-      role: string; // String!
+      role?: NexusGenEnums['MemberRole'] | null; // MemberRole
       team_id: number; // Int!
       user_id: number; // Int!
     }
@@ -353,7 +355,7 @@ export type NexusGenObjectNames = "AuthUser" | "Match" | "MatchReport" | "Member
 
 export type NexusGenInputNames = "MatchReportWhereUniqueInput" | "MatchWhereUniqueInput" | "MemberWhereUniqueInput" | "PlayerReportWhereUniqueInput" | "TeamWhereUniqueInput" | "UserWhereUniqueInput";
 
-export type NexusGenEnumNames = "match_status" | "member_role";
+export type NexusGenEnumNames = "MemberRole" | "match_status" | "member_role";
 
 export type NexusGenInterfaceNames = never;
 

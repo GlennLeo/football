@@ -1,5 +1,10 @@
 /// <reference path="../../generated/nexus.ts" />
-import { extendType, intArg, objectType, stringArg } from "@nexus/schema";
+import { enumType, extendType, intArg, objectType } from "@nexus/schema";
+
+export const MemberRole = enumType({
+  name: "MemberRole",
+  members: ["PENDING", "MANAGER", "MEMBER"],
+});
 
 export const Member = objectType({
   name: "Member",
@@ -28,7 +33,7 @@ export const MemberMutation = extendType({
       args: {
         user_id: intArg({ nullable: false }),
         team_id: intArg({ nullable: false }),
-        role: stringArg({ nullable: false }),
+        role: MemberRole,
         cash: intArg({ nullable: false }),
       },
       resolve: async (_, { user_id, team_id, role, cash }, ctx) => {

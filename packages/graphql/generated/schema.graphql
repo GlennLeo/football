@@ -62,6 +62,12 @@ enum member_role {
   PENDING
 }
 
+enum MemberRole {
+  MANAGER
+  MEMBER
+  PENDING
+}
+
 input MemberWhereUniqueInput {
   id: Int
   member_id: Int
@@ -71,7 +77,7 @@ input MemberWhereUniqueInput {
 type Mutation {
   createNewMatch(away_id: Int, field: String!, home_id: Int!, location: String!): Match!
   createNewMatchReport(loss_id: Int!, match_id: Int!, result: String!, winner_id: Int!): MatchReport!
-  createNewMember(cash: Int!, role: String!, team_id: Int!, user_id: Int!): Member!
+  createNewMember(cash: Int!, role: MemberRole, team_id: Int!, user_id: Int!): Member!
   createNewPlayerReport(assist: Int!, match_id: Int!, score: Int!, user_id: Int!): PlayerReport!
   createNewTeam(description: String, home: String, logo: String, name: String!): Team
   login(email: String!, password: String!): AuthUser
