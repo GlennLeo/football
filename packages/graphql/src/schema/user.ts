@@ -4,7 +4,7 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { config } from "../../config";
 
-const expiresIn = "1 day";
+const expiresIn = "7 days";
 
 export const UserAccount = objectType({
   name: "UserAccount",

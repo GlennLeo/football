@@ -48,7 +48,7 @@ model Member {
   member_id Int
   team_id   Int
   role      member_role? @default(MEMBER)
-  cash      Int?
+  cash      Int?         @default(0)
   user      User         @relation(fields: [member_id], references: [id])
   team      Team         @relation(fields: [team_id], references: [id])
 

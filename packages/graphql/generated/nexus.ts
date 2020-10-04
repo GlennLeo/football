@@ -19,93 +19,6 @@ declare global {
 }
 
 export interface NexusGenInputs {
-  MatchCreateManyWithoutTeam_match_away_idToteamInput: { // input type
-    connect?: NexusGenInputs['MatchWhereUniqueInput'][] | null; // [MatchWhereUniqueInput!]
-    create?: NexusGenInputs['MatchCreateWithoutTeam_match_away_idToteamInput'][] | null; // [MatchCreateWithoutTeam_match_away_idToteamInput!]
-  }
-  MatchCreateManyWithoutTeam_match_home_idToteamInput: { // input type
-    connect?: NexusGenInputs['MatchWhereUniqueInput'][] | null; // [MatchWhereUniqueInput!]
-    create?: NexusGenInputs['MatchCreateWithoutTeam_match_home_idToteamInput'][] | null; // [MatchCreateWithoutTeam_match_home_idToteamInput!]
-  }
-  MatchCreateOneWithoutMatch_reportInput: { // input type
-    connect?: NexusGenInputs['MatchWhereUniqueInput'] | null; // MatchWhereUniqueInput
-    create?: NexusGenInputs['MatchCreateWithoutMatch_reportInput'] | null; // MatchCreateWithoutMatch_reportInput
-  }
-  MatchCreateOneWithoutPlayer_reportInput: { // input type
-    connect?: NexusGenInputs['MatchWhereUniqueInput'] | null; // MatchWhereUniqueInput
-    create?: NexusGenInputs['MatchCreateWithoutPlayer_reportInput'] | null; // MatchCreateWithoutPlayer_reportInput
-  }
-  MatchCreateWithoutMatch_reportInput: { // input type
-    created_at?: NexusGenScalars['DateTime'] | null; // DateTime
-    field?: string | null; // String
-    location?: string | null; // String
-    player_report?: NexusGenInputs['PlayerReportCreateManyWithoutMatchInput'] | null; // PlayerReportCreateManyWithoutMatchInput
-    status?: NexusGenEnums['match_status'] | null; // match_status
-    team_match_away_idToteam?: NexusGenInputs['TeamCreateOneWithoutMatch_match_away_idToteamInput'] | null; // TeamCreateOneWithoutMatch_match_away_idToteamInput
-    team_match_home_idToteam: NexusGenInputs['TeamCreateOneWithoutMatch_match_home_idToteamInput']; // TeamCreateOneWithoutMatch_match_home_idToteamInput!
-    time?: NexusGenScalars['DateTime'] | null; // DateTime
-    updated_at?: NexusGenScalars['DateTime'] | null; // DateTime
-  }
-  MatchCreateWithoutPlayer_reportInput: { // input type
-    created_at?: NexusGenScalars['DateTime'] | null; // DateTime
-    field?: string | null; // String
-    location?: string | null; // String
-    match_report?: NexusGenInputs['MatchReportCreateOneWithoutMatchInput'] | null; // MatchReportCreateOneWithoutMatchInput
-    status?: NexusGenEnums['match_status'] | null; // match_status
-    team_match_away_idToteam?: NexusGenInputs['TeamCreateOneWithoutMatch_match_away_idToteamInput'] | null; // TeamCreateOneWithoutMatch_match_away_idToteamInput
-    team_match_home_idToteam: NexusGenInputs['TeamCreateOneWithoutMatch_match_home_idToteamInput']; // TeamCreateOneWithoutMatch_match_home_idToteamInput!
-    time?: NexusGenScalars['DateTime'] | null; // DateTime
-    updated_at?: NexusGenScalars['DateTime'] | null; // DateTime
-  }
-  MatchCreateWithoutTeam_match_away_idToteamInput: { // input type
-    created_at?: NexusGenScalars['DateTime'] | null; // DateTime
-    field?: string | null; // String
-    location?: string | null; // String
-    match_report?: NexusGenInputs['MatchReportCreateOneWithoutMatchInput'] | null; // MatchReportCreateOneWithoutMatchInput
-    player_report?: NexusGenInputs['PlayerReportCreateManyWithoutMatchInput'] | null; // PlayerReportCreateManyWithoutMatchInput
-    status?: NexusGenEnums['match_status'] | null; // match_status
-    team_match_home_idToteam: NexusGenInputs['TeamCreateOneWithoutMatch_match_home_idToteamInput']; // TeamCreateOneWithoutMatch_match_home_idToteamInput!
-    time?: NexusGenScalars['DateTime'] | null; // DateTime
-    updated_at?: NexusGenScalars['DateTime'] | null; // DateTime
-  }
-  MatchCreateWithoutTeam_match_home_idToteamInput: { // input type
-    created_at?: NexusGenScalars['DateTime'] | null; // DateTime
-    field?: string | null; // String
-    location?: string | null; // String
-    match_report?: NexusGenInputs['MatchReportCreateOneWithoutMatchInput'] | null; // MatchReportCreateOneWithoutMatchInput
-    player_report?: NexusGenInputs['PlayerReportCreateManyWithoutMatchInput'] | null; // PlayerReportCreateManyWithoutMatchInput
-    status?: NexusGenEnums['match_status'] | null; // match_status
-    team_match_away_idToteam?: NexusGenInputs['TeamCreateOneWithoutMatch_match_away_idToteamInput'] | null; // TeamCreateOneWithoutMatch_match_away_idToteamInput
-    time?: NexusGenScalars['DateTime'] | null; // DateTime
-    updated_at?: NexusGenScalars['DateTime'] | null; // DateTime
-  }
-  MatchReportCreateManyWithoutTeam_match_report_loss_idToteamInput: { // input type
-    connect?: NexusGenInputs['MatchReportWhereUniqueInput'][] | null; // [MatchReportWhereUniqueInput!]
-    create?: NexusGenInputs['MatchReportCreateWithoutTeam_match_report_loss_idToteamInput'][] | null; // [MatchReportCreateWithoutTeam_match_report_loss_idToteamInput!]
-  }
-  MatchReportCreateManyWithoutTeam_match_report_winner_idToteamInput: { // input type
-    connect?: NexusGenInputs['MatchReportWhereUniqueInput'][] | null; // [MatchReportWhereUniqueInput!]
-    create?: NexusGenInputs['MatchReportCreateWithoutTeam_match_report_winner_idToteamInput'][] | null; // [MatchReportCreateWithoutTeam_match_report_winner_idToteamInput!]
-  }
-  MatchReportCreateOneWithoutMatchInput: { // input type
-    connect?: NexusGenInputs['MatchReportWhereUniqueInput'] | null; // MatchReportWhereUniqueInput
-    create?: NexusGenInputs['MatchReportCreateWithoutMatchInput'] | null; // MatchReportCreateWithoutMatchInput
-  }
-  MatchReportCreateWithoutMatchInput: { // input type
-    result?: string | null; // String
-    team_match_report_loss_idToteam?: NexusGenInputs['TeamCreateOneWithoutMatch_report_match_report_loss_idToteamInput'] | null; // TeamCreateOneWithoutMatch_report_match_report_loss_idToteamInput
-    team_match_report_winner_idToteam?: NexusGenInputs['TeamCreateOneWithoutMatch_report_match_report_winner_idToteamInput'] | null; // TeamCreateOneWithoutMatch_report_match_report_winner_idToteamInput
-  }
-  MatchReportCreateWithoutTeam_match_report_loss_idToteamInput: { // input type
-    match: NexusGenInputs['MatchCreateOneWithoutMatch_reportInput']; // MatchCreateOneWithoutMatch_reportInput!
-    result?: string | null; // String
-    team_match_report_winner_idToteam?: NexusGenInputs['TeamCreateOneWithoutMatch_report_match_report_winner_idToteamInput'] | null; // TeamCreateOneWithoutMatch_report_match_report_winner_idToteamInput
-  }
-  MatchReportCreateWithoutTeam_match_report_winner_idToteamInput: { // input type
-    match: NexusGenInputs['MatchCreateOneWithoutMatch_reportInput']; // MatchCreateOneWithoutMatch_reportInput!
-    result?: string | null; // String
-    team_match_report_loss_idToteam?: NexusGenInputs['TeamCreateOneWithoutMatch_report_match_report_loss_idToteamInput'] | null; // TeamCreateOneWithoutMatch_report_match_report_loss_idToteamInput
-  }
   MatchReportWhereUniqueInput: { // input type
     id?: number | null; // Int
     loss_id?: number | null; // Int
@@ -117,202 +30,19 @@ export interface NexusGenInputs {
     home_id?: number | null; // Int
     id?: number | null; // Int
   }
-  MemberCreateInput: { // input type
-    cash?: number | null; // Int
-    role?: NexusGenEnums['member_role'] | null; // member_role
-    team: NexusGenInputs['TeamCreateOneWithoutMemberInput']; // TeamCreateOneWithoutMemberInput!
-    user: NexusGenInputs['UserCreateOneWithoutMemberInput']; // UserCreateOneWithoutMemberInput!
-  }
-  MemberCreateManyWithoutTeamInput: { // input type
-    connect?: NexusGenInputs['MemberWhereUniqueInput'][] | null; // [MemberWhereUniqueInput!]
-    create?: NexusGenInputs['MemberCreateWithoutTeamInput'][] | null; // [MemberCreateWithoutTeamInput!]
-  }
-  MemberCreateManyWithoutUserInput: { // input type
-    connect?: NexusGenInputs['MemberWhereUniqueInput'][] | null; // [MemberWhereUniqueInput!]
-    create?: NexusGenInputs['MemberCreateWithoutUserInput'][] | null; // [MemberCreateWithoutUserInput!]
-  }
-  MemberCreateWithoutTeamInput: { // input type
-    cash?: number | null; // Int
-    role?: NexusGenEnums['member_role'] | null; // member_role
-    user: NexusGenInputs['UserCreateOneWithoutMemberInput']; // UserCreateOneWithoutMemberInput!
-  }
-  MemberCreateWithoutUserInput: { // input type
-    cash?: number | null; // Int
-    role?: NexusGenEnums['member_role'] | null; // member_role
-    team: NexusGenInputs['TeamCreateOneWithoutMemberInput']; // TeamCreateOneWithoutMemberInput!
-  }
   MemberWhereUniqueInput: { // input type
     id?: number | null; // Int
     member_id?: number | null; // Int
     team_id?: number | null; // Int
-  }
-  PlayerReportCreateManyWithoutMatchInput: { // input type
-    connect?: NexusGenInputs['PlayerReportWhereUniqueInput'][] | null; // [PlayerReportWhereUniqueInput!]
-    create?: NexusGenInputs['PlayerReportCreateWithoutMatchInput'][] | null; // [PlayerReportCreateWithoutMatchInput!]
-  }
-  PlayerReportCreateManyWithoutUserInput: { // input type
-    connect?: NexusGenInputs['PlayerReportWhereUniqueInput'][] | null; // [PlayerReportWhereUniqueInput!]
-    create?: NexusGenInputs['PlayerReportCreateWithoutUserInput'][] | null; // [PlayerReportCreateWithoutUserInput!]
-  }
-  PlayerReportCreateWithoutMatchInput: { // input type
-    assist?: number | null; // Int
-    score?: number | null; // Int
-    user: NexusGenInputs['UserCreateOneWithoutPlayer_reportInput']; // UserCreateOneWithoutPlayer_reportInput!
-  }
-  PlayerReportCreateWithoutUserInput: { // input type
-    assist?: number | null; // Int
-    match: NexusGenInputs['MatchCreateOneWithoutPlayer_reportInput']; // MatchCreateOneWithoutPlayer_reportInput!
-    score?: number | null; // Int
   }
   PlayerReportWhereUniqueInput: { // input type
     id?: number | null; // Int
     matchId?: number | null; // Int
     player_id?: number | null; // Int
   }
-  TeamCreateManyWithoutUserInput: { // input type
-    connect?: NexusGenInputs['TeamWhereUniqueInput'][] | null; // [TeamWhereUniqueInput!]
-    create?: NexusGenInputs['TeamCreateWithoutUserInput'][] | null; // [TeamCreateWithoutUserInput!]
-  }
-  TeamCreateOneWithoutMatch_match_away_idToteamInput: { // input type
-    connect?: NexusGenInputs['TeamWhereUniqueInput'] | null; // TeamWhereUniqueInput
-    create?: NexusGenInputs['TeamCreateWithoutMatch_match_away_idToteamInput'] | null; // TeamCreateWithoutMatch_match_away_idToteamInput
-  }
-  TeamCreateOneWithoutMatch_match_home_idToteamInput: { // input type
-    connect?: NexusGenInputs['TeamWhereUniqueInput'] | null; // TeamWhereUniqueInput
-    create?: NexusGenInputs['TeamCreateWithoutMatch_match_home_idToteamInput'] | null; // TeamCreateWithoutMatch_match_home_idToteamInput
-  }
-  TeamCreateOneWithoutMatch_report_match_report_loss_idToteamInput: { // input type
-    connect?: NexusGenInputs['TeamWhereUniqueInput'] | null; // TeamWhereUniqueInput
-    create?: NexusGenInputs['TeamCreateWithoutMatch_report_match_report_loss_idToteamInput'] | null; // TeamCreateWithoutMatch_report_match_report_loss_idToteamInput
-  }
-  TeamCreateOneWithoutMatch_report_match_report_winner_idToteamInput: { // input type
-    connect?: NexusGenInputs['TeamWhereUniqueInput'] | null; // TeamWhereUniqueInput
-    create?: NexusGenInputs['TeamCreateWithoutMatch_report_match_report_winner_idToteamInput'] | null; // TeamCreateWithoutMatch_report_match_report_winner_idToteamInput
-  }
-  TeamCreateOneWithoutMemberInput: { // input type
-    connect?: NexusGenInputs['TeamWhereUniqueInput'] | null; // TeamWhereUniqueInput
-    create?: NexusGenInputs['TeamCreateWithoutMemberInput'] | null; // TeamCreateWithoutMemberInput
-  }
-  TeamCreateWithoutMatch_match_away_idToteamInput: { // input type
-    description?: string | null; // String
-    home?: string | null; // String
-    logo?: string | null; // String
-    loss?: number | null; // Int
-    match_match_home_idToteam?: NexusGenInputs['MatchCreateManyWithoutTeam_match_home_idToteamInput'] | null; // MatchCreateManyWithoutTeam_match_home_idToteamInput
-    match_report_match_report_loss_idToteam?: NexusGenInputs['MatchReportCreateManyWithoutTeam_match_report_loss_idToteamInput'] | null; // MatchReportCreateManyWithoutTeam_match_report_loss_idToteamInput
-    match_report_match_report_winner_idToteam?: NexusGenInputs['MatchReportCreateManyWithoutTeam_match_report_winner_idToteamInput'] | null; // MatchReportCreateManyWithoutTeam_match_report_winner_idToteamInput
-    member?: NexusGenInputs['MemberCreateManyWithoutTeamInput'] | null; // MemberCreateManyWithoutTeamInput
-    name: string; // String!
-    user?: NexusGenInputs['UserCreateOneWithoutTeamInput'] | null; // UserCreateOneWithoutTeamInput
-    win?: number | null; // Int
-  }
-  TeamCreateWithoutMatch_match_home_idToteamInput: { // input type
-    description?: string | null; // String
-    home?: string | null; // String
-    logo?: string | null; // String
-    loss?: number | null; // Int
-    match_match_away_idToteam?: NexusGenInputs['MatchCreateManyWithoutTeam_match_away_idToteamInput'] | null; // MatchCreateManyWithoutTeam_match_away_idToteamInput
-    match_report_match_report_loss_idToteam?: NexusGenInputs['MatchReportCreateManyWithoutTeam_match_report_loss_idToteamInput'] | null; // MatchReportCreateManyWithoutTeam_match_report_loss_idToteamInput
-    match_report_match_report_winner_idToteam?: NexusGenInputs['MatchReportCreateManyWithoutTeam_match_report_winner_idToteamInput'] | null; // MatchReportCreateManyWithoutTeam_match_report_winner_idToteamInput
-    member?: NexusGenInputs['MemberCreateManyWithoutTeamInput'] | null; // MemberCreateManyWithoutTeamInput
-    name: string; // String!
-    user?: NexusGenInputs['UserCreateOneWithoutTeamInput'] | null; // UserCreateOneWithoutTeamInput
-    win?: number | null; // Int
-  }
-  TeamCreateWithoutMatch_report_match_report_loss_idToteamInput: { // input type
-    description?: string | null; // String
-    home?: string | null; // String
-    logo?: string | null; // String
-    loss?: number | null; // Int
-    match_match_away_idToteam?: NexusGenInputs['MatchCreateManyWithoutTeam_match_away_idToteamInput'] | null; // MatchCreateManyWithoutTeam_match_away_idToteamInput
-    match_match_home_idToteam?: NexusGenInputs['MatchCreateManyWithoutTeam_match_home_idToteamInput'] | null; // MatchCreateManyWithoutTeam_match_home_idToteamInput
-    match_report_match_report_winner_idToteam?: NexusGenInputs['MatchReportCreateManyWithoutTeam_match_report_winner_idToteamInput'] | null; // MatchReportCreateManyWithoutTeam_match_report_winner_idToteamInput
-    member?: NexusGenInputs['MemberCreateManyWithoutTeamInput'] | null; // MemberCreateManyWithoutTeamInput
-    name: string; // String!
-    user?: NexusGenInputs['UserCreateOneWithoutTeamInput'] | null; // UserCreateOneWithoutTeamInput
-    win?: number | null; // Int
-  }
-  TeamCreateWithoutMatch_report_match_report_winner_idToteamInput: { // input type
-    description?: string | null; // String
-    home?: string | null; // String
-    logo?: string | null; // String
-    loss?: number | null; // Int
-    match_match_away_idToteam?: NexusGenInputs['MatchCreateManyWithoutTeam_match_away_idToteamInput'] | null; // MatchCreateManyWithoutTeam_match_away_idToteamInput
-    match_match_home_idToteam?: NexusGenInputs['MatchCreateManyWithoutTeam_match_home_idToteamInput'] | null; // MatchCreateManyWithoutTeam_match_home_idToteamInput
-    match_report_match_report_loss_idToteam?: NexusGenInputs['MatchReportCreateManyWithoutTeam_match_report_loss_idToteamInput'] | null; // MatchReportCreateManyWithoutTeam_match_report_loss_idToteamInput
-    member?: NexusGenInputs['MemberCreateManyWithoutTeamInput'] | null; // MemberCreateManyWithoutTeamInput
-    name: string; // String!
-    user?: NexusGenInputs['UserCreateOneWithoutTeamInput'] | null; // UserCreateOneWithoutTeamInput
-    win?: number | null; // Int
-  }
-  TeamCreateWithoutMemberInput: { // input type
-    description?: string | null; // String
-    home?: string | null; // String
-    logo?: string | null; // String
-    loss?: number | null; // Int
-    match_match_away_idToteam?: NexusGenInputs['MatchCreateManyWithoutTeam_match_away_idToteamInput'] | null; // MatchCreateManyWithoutTeam_match_away_idToteamInput
-    match_match_home_idToteam?: NexusGenInputs['MatchCreateManyWithoutTeam_match_home_idToteamInput'] | null; // MatchCreateManyWithoutTeam_match_home_idToteamInput
-    match_report_match_report_loss_idToteam?: NexusGenInputs['MatchReportCreateManyWithoutTeam_match_report_loss_idToteamInput'] | null; // MatchReportCreateManyWithoutTeam_match_report_loss_idToteamInput
-    match_report_match_report_winner_idToteam?: NexusGenInputs['MatchReportCreateManyWithoutTeam_match_report_winner_idToteamInput'] | null; // MatchReportCreateManyWithoutTeam_match_report_winner_idToteamInput
-    name: string; // String!
-    user?: NexusGenInputs['UserCreateOneWithoutTeamInput'] | null; // UserCreateOneWithoutTeamInput
-    win?: number | null; // Int
-  }
-  TeamCreateWithoutUserInput: { // input type
-    description?: string | null; // String
-    home?: string | null; // String
-    logo?: string | null; // String
-    loss?: number | null; // Int
-    match_match_away_idToteam?: NexusGenInputs['MatchCreateManyWithoutTeam_match_away_idToteamInput'] | null; // MatchCreateManyWithoutTeam_match_away_idToteamInput
-    match_match_home_idToteam?: NexusGenInputs['MatchCreateManyWithoutTeam_match_home_idToteamInput'] | null; // MatchCreateManyWithoutTeam_match_home_idToteamInput
-    match_report_match_report_loss_idToteam?: NexusGenInputs['MatchReportCreateManyWithoutTeam_match_report_loss_idToteamInput'] | null; // MatchReportCreateManyWithoutTeam_match_report_loss_idToteamInput
-    match_report_match_report_winner_idToteam?: NexusGenInputs['MatchReportCreateManyWithoutTeam_match_report_winner_idToteamInput'] | null; // MatchReportCreateManyWithoutTeam_match_report_winner_idToteamInput
-    member?: NexusGenInputs['MemberCreateManyWithoutTeamInput'] | null; // MemberCreateManyWithoutTeamInput
-    name: string; // String!
-    win?: number | null; // Int
-  }
   TeamWhereUniqueInput: { // input type
     creator_id?: number | null; // Int
     id?: number | null; // Int
-  }
-  UserCreateOneWithoutMemberInput: { // input type
-    connect?: NexusGenInputs['UserWhereUniqueInput'] | null; // UserWhereUniqueInput
-    create?: NexusGenInputs['UserCreateWithoutMemberInput'] | null; // UserCreateWithoutMemberInput
-  }
-  UserCreateOneWithoutPlayer_reportInput: { // input type
-    connect?: NexusGenInputs['UserWhereUniqueInput'] | null; // UserWhereUniqueInput
-    create?: NexusGenInputs['UserCreateWithoutPlayer_reportInput'] | null; // UserCreateWithoutPlayer_reportInput
-  }
-  UserCreateOneWithoutTeamInput: { // input type
-    connect?: NexusGenInputs['UserWhereUniqueInput'] | null; // UserWhereUniqueInput
-    create?: NexusGenInputs['UserCreateWithoutTeamInput'] | null; // UserCreateWithoutTeamInput
-  }
-  UserCreateWithoutMemberInput: { // input type
-    address?: string | null; // String
-    email: string; // String!
-    name?: string | null; // String
-    password: string; // String!
-    phone?: string | null; // String
-    player_report?: NexusGenInputs['PlayerReportCreateManyWithoutUserInput'] | null; // PlayerReportCreateManyWithoutUserInput
-    team?: NexusGenInputs['TeamCreateManyWithoutUserInput'] | null; // TeamCreateManyWithoutUserInput
-  }
-  UserCreateWithoutPlayer_reportInput: { // input type
-    address?: string | null; // String
-    email: string; // String!
-    member?: NexusGenInputs['MemberCreateManyWithoutUserInput'] | null; // MemberCreateManyWithoutUserInput
-    name?: string | null; // String
-    password: string; // String!
-    phone?: string | null; // String
-    team?: NexusGenInputs['TeamCreateManyWithoutUserInput'] | null; // TeamCreateManyWithoutUserInput
-  }
-  UserCreateWithoutTeamInput: { // input type
-    address?: string | null; // String
-    email: string; // String!
-    member?: NexusGenInputs['MemberCreateManyWithoutUserInput'] | null; // MemberCreateManyWithoutUserInput
-    name?: string | null; // String
-    password: string; // String!
-    phone?: string | null; // String
-    player_report?: NexusGenInputs['PlayerReportCreateManyWithoutUserInput'] | null; // PlayerReportCreateManyWithoutUserInput
   }
   UserWhereUniqueInput: { // input type
     email?: string | null; // String
@@ -393,52 +123,11 @@ export interface NexusGenRootTypes {
 }
 
 export interface NexusGenAllTypes extends NexusGenRootTypes {
-  MatchCreateManyWithoutTeam_match_away_idToteamInput: NexusGenInputs['MatchCreateManyWithoutTeam_match_away_idToteamInput'];
-  MatchCreateManyWithoutTeam_match_home_idToteamInput: NexusGenInputs['MatchCreateManyWithoutTeam_match_home_idToteamInput'];
-  MatchCreateOneWithoutMatch_reportInput: NexusGenInputs['MatchCreateOneWithoutMatch_reportInput'];
-  MatchCreateOneWithoutPlayer_reportInput: NexusGenInputs['MatchCreateOneWithoutPlayer_reportInput'];
-  MatchCreateWithoutMatch_reportInput: NexusGenInputs['MatchCreateWithoutMatch_reportInput'];
-  MatchCreateWithoutPlayer_reportInput: NexusGenInputs['MatchCreateWithoutPlayer_reportInput'];
-  MatchCreateWithoutTeam_match_away_idToteamInput: NexusGenInputs['MatchCreateWithoutTeam_match_away_idToteamInput'];
-  MatchCreateWithoutTeam_match_home_idToteamInput: NexusGenInputs['MatchCreateWithoutTeam_match_home_idToteamInput'];
-  MatchReportCreateManyWithoutTeam_match_report_loss_idToteamInput: NexusGenInputs['MatchReportCreateManyWithoutTeam_match_report_loss_idToteamInput'];
-  MatchReportCreateManyWithoutTeam_match_report_winner_idToteamInput: NexusGenInputs['MatchReportCreateManyWithoutTeam_match_report_winner_idToteamInput'];
-  MatchReportCreateOneWithoutMatchInput: NexusGenInputs['MatchReportCreateOneWithoutMatchInput'];
-  MatchReportCreateWithoutMatchInput: NexusGenInputs['MatchReportCreateWithoutMatchInput'];
-  MatchReportCreateWithoutTeam_match_report_loss_idToteamInput: NexusGenInputs['MatchReportCreateWithoutTeam_match_report_loss_idToteamInput'];
-  MatchReportCreateWithoutTeam_match_report_winner_idToteamInput: NexusGenInputs['MatchReportCreateWithoutTeam_match_report_winner_idToteamInput'];
   MatchReportWhereUniqueInput: NexusGenInputs['MatchReportWhereUniqueInput'];
   MatchWhereUniqueInput: NexusGenInputs['MatchWhereUniqueInput'];
-  MemberCreateInput: NexusGenInputs['MemberCreateInput'];
-  MemberCreateManyWithoutTeamInput: NexusGenInputs['MemberCreateManyWithoutTeamInput'];
-  MemberCreateManyWithoutUserInput: NexusGenInputs['MemberCreateManyWithoutUserInput'];
-  MemberCreateWithoutTeamInput: NexusGenInputs['MemberCreateWithoutTeamInput'];
-  MemberCreateWithoutUserInput: NexusGenInputs['MemberCreateWithoutUserInput'];
   MemberWhereUniqueInput: NexusGenInputs['MemberWhereUniqueInput'];
-  PlayerReportCreateManyWithoutMatchInput: NexusGenInputs['PlayerReportCreateManyWithoutMatchInput'];
-  PlayerReportCreateManyWithoutUserInput: NexusGenInputs['PlayerReportCreateManyWithoutUserInput'];
-  PlayerReportCreateWithoutMatchInput: NexusGenInputs['PlayerReportCreateWithoutMatchInput'];
-  PlayerReportCreateWithoutUserInput: NexusGenInputs['PlayerReportCreateWithoutUserInput'];
   PlayerReportWhereUniqueInput: NexusGenInputs['PlayerReportWhereUniqueInput'];
-  TeamCreateManyWithoutUserInput: NexusGenInputs['TeamCreateManyWithoutUserInput'];
-  TeamCreateOneWithoutMatch_match_away_idToteamInput: NexusGenInputs['TeamCreateOneWithoutMatch_match_away_idToteamInput'];
-  TeamCreateOneWithoutMatch_match_home_idToteamInput: NexusGenInputs['TeamCreateOneWithoutMatch_match_home_idToteamInput'];
-  TeamCreateOneWithoutMatch_report_match_report_loss_idToteamInput: NexusGenInputs['TeamCreateOneWithoutMatch_report_match_report_loss_idToteamInput'];
-  TeamCreateOneWithoutMatch_report_match_report_winner_idToteamInput: NexusGenInputs['TeamCreateOneWithoutMatch_report_match_report_winner_idToteamInput'];
-  TeamCreateOneWithoutMemberInput: NexusGenInputs['TeamCreateOneWithoutMemberInput'];
-  TeamCreateWithoutMatch_match_away_idToteamInput: NexusGenInputs['TeamCreateWithoutMatch_match_away_idToteamInput'];
-  TeamCreateWithoutMatch_match_home_idToteamInput: NexusGenInputs['TeamCreateWithoutMatch_match_home_idToteamInput'];
-  TeamCreateWithoutMatch_report_match_report_loss_idToteamInput: NexusGenInputs['TeamCreateWithoutMatch_report_match_report_loss_idToteamInput'];
-  TeamCreateWithoutMatch_report_match_report_winner_idToteamInput: NexusGenInputs['TeamCreateWithoutMatch_report_match_report_winner_idToteamInput'];
-  TeamCreateWithoutMemberInput: NexusGenInputs['TeamCreateWithoutMemberInput'];
-  TeamCreateWithoutUserInput: NexusGenInputs['TeamCreateWithoutUserInput'];
   TeamWhereUniqueInput: NexusGenInputs['TeamWhereUniqueInput'];
-  UserCreateOneWithoutMemberInput: NexusGenInputs['UserCreateOneWithoutMemberInput'];
-  UserCreateOneWithoutPlayer_reportInput: NexusGenInputs['UserCreateOneWithoutPlayer_reportInput'];
-  UserCreateOneWithoutTeamInput: NexusGenInputs['UserCreateOneWithoutTeamInput'];
-  UserCreateWithoutMemberInput: NexusGenInputs['UserCreateWithoutMemberInput'];
-  UserCreateWithoutPlayer_reportInput: NexusGenInputs['UserCreateWithoutPlayer_reportInput'];
-  UserCreateWithoutTeamInput: NexusGenInputs['UserCreateWithoutTeamInput'];
   UserWhereUniqueInput: NexusGenInputs['UserWhereUniqueInput'];
   match_status: NexusGenEnums['match_status'];
   member_role: NexusGenEnums['member_role'];
@@ -555,7 +244,10 @@ export interface NexusGenArgTypes {
       winner_id: number; // Int!
     }
     createNewMember: { // args
-      data: NexusGenInputs['MemberCreateInput']; // MemberCreateInput!
+      cash: number; // Int!
+      role: string; // String!
+      team_id: number; // Int!
+      user_id: number; // Int!
     }
     createNewPlayerReport: { // args
       assist: number; // Int!
@@ -659,7 +351,7 @@ export interface NexusGenInheritedFields {}
 
 export type NexusGenObjectNames = "AuthUser" | "Match" | "MatchReport" | "Member" | "Mutation" | "PlayerReport" | "Query" | "Team" | "User" | "UserAccount";
 
-export type NexusGenInputNames = "MatchCreateManyWithoutTeam_match_away_idToteamInput" | "MatchCreateManyWithoutTeam_match_home_idToteamInput" | "MatchCreateOneWithoutMatch_reportInput" | "MatchCreateOneWithoutPlayer_reportInput" | "MatchCreateWithoutMatch_reportInput" | "MatchCreateWithoutPlayer_reportInput" | "MatchCreateWithoutTeam_match_away_idToteamInput" | "MatchCreateWithoutTeam_match_home_idToteamInput" | "MatchReportCreateManyWithoutTeam_match_report_loss_idToteamInput" | "MatchReportCreateManyWithoutTeam_match_report_winner_idToteamInput" | "MatchReportCreateOneWithoutMatchInput" | "MatchReportCreateWithoutMatchInput" | "MatchReportCreateWithoutTeam_match_report_loss_idToteamInput" | "MatchReportCreateWithoutTeam_match_report_winner_idToteamInput" | "MatchReportWhereUniqueInput" | "MatchWhereUniqueInput" | "MemberCreateInput" | "MemberCreateManyWithoutTeamInput" | "MemberCreateManyWithoutUserInput" | "MemberCreateWithoutTeamInput" | "MemberCreateWithoutUserInput" | "MemberWhereUniqueInput" | "PlayerReportCreateManyWithoutMatchInput" | "PlayerReportCreateManyWithoutUserInput" | "PlayerReportCreateWithoutMatchInput" | "PlayerReportCreateWithoutUserInput" | "PlayerReportWhereUniqueInput" | "TeamCreateManyWithoutUserInput" | "TeamCreateOneWithoutMatch_match_away_idToteamInput" | "TeamCreateOneWithoutMatch_match_home_idToteamInput" | "TeamCreateOneWithoutMatch_report_match_report_loss_idToteamInput" | "TeamCreateOneWithoutMatch_report_match_report_winner_idToteamInput" | "TeamCreateOneWithoutMemberInput" | "TeamCreateWithoutMatch_match_away_idToteamInput" | "TeamCreateWithoutMatch_match_home_idToteamInput" | "TeamCreateWithoutMatch_report_match_report_loss_idToteamInput" | "TeamCreateWithoutMatch_report_match_report_winner_idToteamInput" | "TeamCreateWithoutMemberInput" | "TeamCreateWithoutUserInput" | "TeamWhereUniqueInput" | "UserCreateOneWithoutMemberInput" | "UserCreateOneWithoutPlayer_reportInput" | "UserCreateOneWithoutTeamInput" | "UserCreateWithoutMemberInput" | "UserCreateWithoutPlayer_reportInput" | "UserCreateWithoutTeamInput" | "UserWhereUniqueInput";
+export type NexusGenInputNames = "MatchReportWhereUniqueInput" | "MatchWhereUniqueInput" | "MemberWhereUniqueInput" | "PlayerReportWhereUniqueInput" | "TeamWhereUniqueInput" | "UserWhereUniqueInput";
 
 export type NexusGenEnumNames = "match_status" | "member_role";
 

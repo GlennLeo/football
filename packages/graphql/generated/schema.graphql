@@ -27,113 +27,12 @@ enum match_status {
   PENDING
 }
 
-input MatchCreateManyWithoutTeam_match_away_idToteamInput {
-  connect: [MatchWhereUniqueInput!]
-  create: [MatchCreateWithoutTeam_match_away_idToteamInput!]
-}
-
-input MatchCreateManyWithoutTeam_match_home_idToteamInput {
-  connect: [MatchWhereUniqueInput!]
-  create: [MatchCreateWithoutTeam_match_home_idToteamInput!]
-}
-
-input MatchCreateOneWithoutMatch_reportInput {
-  connect: MatchWhereUniqueInput
-  create: MatchCreateWithoutMatch_reportInput
-}
-
-input MatchCreateOneWithoutPlayer_reportInput {
-  connect: MatchWhereUniqueInput
-  create: MatchCreateWithoutPlayer_reportInput
-}
-
-input MatchCreateWithoutMatch_reportInput {
-  created_at: DateTime
-  field: String
-  location: String
-  player_report: PlayerReportCreateManyWithoutMatchInput
-  status: match_status
-  team_match_away_idToteam: TeamCreateOneWithoutMatch_match_away_idToteamInput
-  team_match_home_idToteam: TeamCreateOneWithoutMatch_match_home_idToteamInput!
-  time: DateTime
-  updated_at: DateTime
-}
-
-input MatchCreateWithoutPlayer_reportInput {
-  created_at: DateTime
-  field: String
-  location: String
-  match_report: MatchReportCreateOneWithoutMatchInput
-  status: match_status
-  team_match_away_idToteam: TeamCreateOneWithoutMatch_match_away_idToteamInput
-  team_match_home_idToteam: TeamCreateOneWithoutMatch_match_home_idToteamInput!
-  time: DateTime
-  updated_at: DateTime
-}
-
-input MatchCreateWithoutTeam_match_away_idToteamInput {
-  created_at: DateTime
-  field: String
-  location: String
-  match_report: MatchReportCreateOneWithoutMatchInput
-  player_report: PlayerReportCreateManyWithoutMatchInput
-  status: match_status
-  team_match_home_idToteam: TeamCreateOneWithoutMatch_match_home_idToteamInput!
-  time: DateTime
-  updated_at: DateTime
-}
-
-input MatchCreateWithoutTeam_match_home_idToteamInput {
-  created_at: DateTime
-  field: String
-  location: String
-  match_report: MatchReportCreateOneWithoutMatchInput
-  player_report: PlayerReportCreateManyWithoutMatchInput
-  status: match_status
-  team_match_away_idToteam: TeamCreateOneWithoutMatch_match_away_idToteamInput
-  time: DateTime
-  updated_at: DateTime
-}
-
 type MatchReport {
   id: Int!
   loss: Team!
   match: Match!
   result: String
   winner: Team!
-}
-
-input MatchReportCreateManyWithoutTeam_match_report_loss_idToteamInput {
-  connect: [MatchReportWhereUniqueInput!]
-  create: [MatchReportCreateWithoutTeam_match_report_loss_idToteamInput!]
-}
-
-input MatchReportCreateManyWithoutTeam_match_report_winner_idToteamInput {
-  connect: [MatchReportWhereUniqueInput!]
-  create: [MatchReportCreateWithoutTeam_match_report_winner_idToteamInput!]
-}
-
-input MatchReportCreateOneWithoutMatchInput {
-  connect: MatchReportWhereUniqueInput
-  create: MatchReportCreateWithoutMatchInput
-}
-
-input MatchReportCreateWithoutMatchInput {
-  result: String
-  team_match_report_loss_idToteam: TeamCreateOneWithoutMatch_report_match_report_loss_idToteamInput
-  team_match_report_winner_idToteam: TeamCreateOneWithoutMatch_report_match_report_winner_idToteamInput
-}
-
-input MatchReportCreateWithoutTeam_match_report_loss_idToteamInput {
-  match: MatchCreateOneWithoutMatch_reportInput!
-  result: String
-  team_match_report_winner_idToteam: TeamCreateOneWithoutMatch_report_match_report_winner_idToteamInput
-}
-
-input MatchReportCreateWithoutTeam_match_report_winner_idToteamInput {
-  match: MatchCreateOneWithoutMatch_reportInput!
-  result: String
-  team_match_report_loss_idToteam: TeamCreateOneWithoutMatch_report_match_report_loss_idToteamInput
 }
 
 input MatchReportWhereUniqueInput {
@@ -163,35 +62,6 @@ enum member_role {
   PENDING
 }
 
-input MemberCreateInput {
-  cash: Int
-  role: member_role
-  team: TeamCreateOneWithoutMemberInput!
-  user: UserCreateOneWithoutMemberInput!
-}
-
-input MemberCreateManyWithoutTeamInput {
-  connect: [MemberWhereUniqueInput!]
-  create: [MemberCreateWithoutTeamInput!]
-}
-
-input MemberCreateManyWithoutUserInput {
-  connect: [MemberWhereUniqueInput!]
-  create: [MemberCreateWithoutUserInput!]
-}
-
-input MemberCreateWithoutTeamInput {
-  cash: Int
-  role: member_role
-  user: UserCreateOneWithoutMemberInput!
-}
-
-input MemberCreateWithoutUserInput {
-  cash: Int
-  role: member_role
-  team: TeamCreateOneWithoutMemberInput!
-}
-
 input MemberWhereUniqueInput {
   id: Int
   member_id: Int
@@ -201,7 +71,7 @@ input MemberWhereUniqueInput {
 type Mutation {
   createNewMatch(away_id: Int, field: String!, home_id: Int!, location: String!): Match!
   createNewMatchReport(loss_id: Int!, match_id: Int!, result: String!, winner_id: Int!): MatchReport!
-  createNewMember(data: MemberCreateInput!): Member!
+  createNewMember(cash: Int!, role: String!, team_id: Int!, user_id: Int!): Member!
   createNewPlayerReport(assist: Int!, match_id: Int!, score: Int!, user_id: Int!): PlayerReport!
   createNewTeam(description: String, home: String, logo: String, name: String!): Team
   login(email: String!, password: String!): AuthUser
@@ -214,28 +84,6 @@ type PlayerReport {
   match: Match!
   score: Int
   user: User!
-}
-
-input PlayerReportCreateManyWithoutMatchInput {
-  connect: [PlayerReportWhereUniqueInput!]
-  create: [PlayerReportCreateWithoutMatchInput!]
-}
-
-input PlayerReportCreateManyWithoutUserInput {
-  connect: [PlayerReportWhereUniqueInput!]
-  create: [PlayerReportCreateWithoutUserInput!]
-}
-
-input PlayerReportCreateWithoutMatchInput {
-  assist: Int
-  score: Int
-  user: UserCreateOneWithoutPlayer_reportInput!
-}
-
-input PlayerReportCreateWithoutUserInput {
-  assist: Int
-  match: MatchCreateOneWithoutPlayer_reportInput!
-  score: Int
 }
 
 input PlayerReportWhereUniqueInput {
@@ -271,120 +119,6 @@ type Team {
   win: Int
 }
 
-input TeamCreateManyWithoutUserInput {
-  connect: [TeamWhereUniqueInput!]
-  create: [TeamCreateWithoutUserInput!]
-}
-
-input TeamCreateOneWithoutMatch_match_away_idToteamInput {
-  connect: TeamWhereUniqueInput
-  create: TeamCreateWithoutMatch_match_away_idToteamInput
-}
-
-input TeamCreateOneWithoutMatch_match_home_idToteamInput {
-  connect: TeamWhereUniqueInput
-  create: TeamCreateWithoutMatch_match_home_idToteamInput
-}
-
-input TeamCreateOneWithoutMatch_report_match_report_loss_idToteamInput {
-  connect: TeamWhereUniqueInput
-  create: TeamCreateWithoutMatch_report_match_report_loss_idToteamInput
-}
-
-input TeamCreateOneWithoutMatch_report_match_report_winner_idToteamInput {
-  connect: TeamWhereUniqueInput
-  create: TeamCreateWithoutMatch_report_match_report_winner_idToteamInput
-}
-
-input TeamCreateOneWithoutMemberInput {
-  connect: TeamWhereUniqueInput
-  create: TeamCreateWithoutMemberInput
-}
-
-input TeamCreateWithoutMatch_match_away_idToteamInput {
-  description: String
-  home: String
-  logo: String
-  loss: Int
-  match_match_home_idToteam: MatchCreateManyWithoutTeam_match_home_idToteamInput
-  match_report_match_report_loss_idToteam: MatchReportCreateManyWithoutTeam_match_report_loss_idToteamInput
-  match_report_match_report_winner_idToteam: MatchReportCreateManyWithoutTeam_match_report_winner_idToteamInput
-  member: MemberCreateManyWithoutTeamInput
-  name: String!
-  user: UserCreateOneWithoutTeamInput
-  win: Int
-}
-
-input TeamCreateWithoutMatch_match_home_idToteamInput {
-  description: String
-  home: String
-  logo: String
-  loss: Int
-  match_match_away_idToteam: MatchCreateManyWithoutTeam_match_away_idToteamInput
-  match_report_match_report_loss_idToteam: MatchReportCreateManyWithoutTeam_match_report_loss_idToteamInput
-  match_report_match_report_winner_idToteam: MatchReportCreateManyWithoutTeam_match_report_winner_idToteamInput
-  member: MemberCreateManyWithoutTeamInput
-  name: String!
-  user: UserCreateOneWithoutTeamInput
-  win: Int
-}
-
-input TeamCreateWithoutMatch_report_match_report_loss_idToteamInput {
-  description: String
-  home: String
-  logo: String
-  loss: Int
-  match_match_away_idToteam: MatchCreateManyWithoutTeam_match_away_idToteamInput
-  match_match_home_idToteam: MatchCreateManyWithoutTeam_match_home_idToteamInput
-  match_report_match_report_winner_idToteam: MatchReportCreateManyWithoutTeam_match_report_winner_idToteamInput
-  member: MemberCreateManyWithoutTeamInput
-  name: String!
-  user: UserCreateOneWithoutTeamInput
-  win: Int
-}
-
-input TeamCreateWithoutMatch_report_match_report_winner_idToteamInput {
-  description: String
-  home: String
-  logo: String
-  loss: Int
-  match_match_away_idToteam: MatchCreateManyWithoutTeam_match_away_idToteamInput
-  match_match_home_idToteam: MatchCreateManyWithoutTeam_match_home_idToteamInput
-  match_report_match_report_loss_idToteam: MatchReportCreateManyWithoutTeam_match_report_loss_idToteamInput
-  member: MemberCreateManyWithoutTeamInput
-  name: String!
-  user: UserCreateOneWithoutTeamInput
-  win: Int
-}
-
-input TeamCreateWithoutMemberInput {
-  description: String
-  home: String
-  logo: String
-  loss: Int
-  match_match_away_idToteam: MatchCreateManyWithoutTeam_match_away_idToteamInput
-  match_match_home_idToteam: MatchCreateManyWithoutTeam_match_home_idToteamInput
-  match_report_match_report_loss_idToteam: MatchReportCreateManyWithoutTeam_match_report_loss_idToteamInput
-  match_report_match_report_winner_idToteam: MatchReportCreateManyWithoutTeam_match_report_winner_idToteamInput
-  name: String!
-  user: UserCreateOneWithoutTeamInput
-  win: Int
-}
-
-input TeamCreateWithoutUserInput {
-  description: String
-  home: String
-  logo: String
-  loss: Int
-  match_match_away_idToteam: MatchCreateManyWithoutTeam_match_away_idToteamInput
-  match_match_home_idToteam: MatchCreateManyWithoutTeam_match_home_idToteamInput
-  match_report_match_report_loss_idToteam: MatchReportCreateManyWithoutTeam_match_report_loss_idToteamInput
-  match_report_match_report_winner_idToteam: MatchReportCreateManyWithoutTeam_match_report_winner_idToteamInput
-  member: MemberCreateManyWithoutTeamInput
-  name: String!
-  win: Int
-}
-
 input TeamWhereUniqueInput {
   creator_id: Int
   id: Int
@@ -407,51 +141,6 @@ type UserAccount {
   password: String!
   phone: String
   teams: [Team!]
-}
-
-input UserCreateOneWithoutMemberInput {
-  connect: UserWhereUniqueInput
-  create: UserCreateWithoutMemberInput
-}
-
-input UserCreateOneWithoutPlayer_reportInput {
-  connect: UserWhereUniqueInput
-  create: UserCreateWithoutPlayer_reportInput
-}
-
-input UserCreateOneWithoutTeamInput {
-  connect: UserWhereUniqueInput
-  create: UserCreateWithoutTeamInput
-}
-
-input UserCreateWithoutMemberInput {
-  address: String
-  email: String!
-  name: String
-  password: String!
-  phone: String
-  player_report: PlayerReportCreateManyWithoutUserInput
-  team: TeamCreateManyWithoutUserInput
-}
-
-input UserCreateWithoutPlayer_reportInput {
-  address: String
-  email: String!
-  member: MemberCreateManyWithoutUserInput
-  name: String
-  password: String!
-  phone: String
-  team: TeamCreateManyWithoutUserInput
-}
-
-input UserCreateWithoutTeamInput {
-  address: String
-  email: String!
-  member: MemberCreateManyWithoutUserInput
-  name: String
-  password: String!
-  phone: String
-  player_report: PlayerReportCreateManyWithoutUserInput
 }
 
 input UserWhereUniqueInput {

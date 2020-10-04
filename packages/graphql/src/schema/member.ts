@@ -1,5 +1,5 @@
 /// <reference path="../../generated/nexus.ts" />
-import { extendType, objectType } from "@nexus/schema";
+import { extendType, intArg, objectType, stringArg } from "@nexus/schema";
 
 export const Member = objectType({
   name: "Member",
@@ -23,6 +23,48 @@ export const MemberQuery = extendType({
 export const MemberMutation = extendType({
   type: "Mutation",
   definition(t) {
-    t.crud.createOneMember({ alias: "createNewMember" });
+    t.field("createNewMember", {
+      type: Member,
+      args: {
+        user_id: intArg({ nullable: false }),
+        team_id: intArg({ nullable: false }),
+        role: stringArg({ nullable: false }),
+        cash: intArg({ nullable: false }),
+      },
+      resolve: async (_, { user_id, team_id, role, cash }, ctx) => {
+        if (!ctx.authUser) {
+          throw new Error("Unauthorized!!!");
+        }
+        const members = await ctx.prisma.member.findMany({
+          where: { member_id: ctx.authUser.id, team_id: team_id },
+          select: { role: true },
+          take: 1,
+        });
+        if (members[0] && members[0].role !== "MANAGER") {
+          throw new Error("Unauthorized!!!");
+        }
+        const member = await ctx.prisma.member.create({
+          data: {
+            user: {
+              connect: {
+                id: user_id,
+              },
+            },
+            team: {
+              connect: {
+                id: team_id,
+              },
+            },
+            role,
+            cash,
+          },
+          include: {
+            user: true,
+            team: true,
+          },
+        });
+        return member;
+      },
+    });
   },
 });

@@ -39,6 +39,14 @@ export const MatchMutation = extendType({
         if (!ctx.authUser) {
           throw new Error("Unauthorized!!!");
         }
+        const members = await ctx.prisma.member.findMany({
+          where: { member_id: ctx.authUser.id, team_id: home_id },
+          select: { role: true },
+          take: 1,
+        });
+        if (members[0].role !== "MANAGER") {
+          throw new Error("Unauthorized!!!");
+        }
         const match = await ctx.prisma.match.create({
           data: {
             team_match_away_idToteam: {
