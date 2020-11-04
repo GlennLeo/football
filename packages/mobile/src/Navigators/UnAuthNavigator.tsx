@@ -1,14 +1,15 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
-import {Signin, Signup} from '../Screens';
+import {Login, Signup} from '../Screens';
 
-const Stack = createStackNavigator();
-
-export const UnAuthNavigator = () => {
+const UnAuthStack = createStackNavigator();
+const UnAuthNavigator = () => {
   return (
-    <Stack.Navigator headerMode="none" initialRouteName="Signin">
-      <Stack.Screen name="Signin" component={Signin} />
-      <Stack.Screen name="Signup" component={Signup} />
-    </Stack.Navigator>
+    <UnAuthStack.Navigator headerMode="none">
+      <UnAuthStack.Screen name="Login" component={Login} />
+      <UnAuthStack.Screen name="Signup" component={Signup} />
+    </UnAuthStack.Navigator>
   );
 };
+
+export default UnAuthNavigator;

@@ -1,2 +1,4 @@
-export * from './queries';
-export * from './mutations';
+import * as UserQueries from './queries';
+import * as UserMutations from './mutations';
+
+export {UserQueries, UserMutations};

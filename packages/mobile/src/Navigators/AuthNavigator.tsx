@@ -1,13 +1,15 @@
 import React from 'react';
-import {createStackNavigator} from '@react-navigation/stack';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {Dashboard} from '../Screens';
 
-const Stack = createStackNavigator();
+const Tab = createBottomTabNavigator();
 
-export const AuthNavigator = () => {
+const AuthNavigator = () => {
   return (
-    <Stack.Navigator>
-      <Stack.Screen name="Dashboard" component={Dashboard} />
-    </Stack.Navigator>
+    <Tab.Navigator>
+      <Tab.Screen name="Dashboard" component={Dashboard} />
+    </Tab.Navigator>
   );
 };
+
+export default AuthNavigator;
