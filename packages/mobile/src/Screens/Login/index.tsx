@@ -6,6 +6,7 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import {useMutation} from '@apollo/client';
 import {useForm} from 'react-hook-form';
 import RNSInfo from 'react-native-sensitive-info';
+import {showMessage} from 'react-native-flash-message';
 import {UserMutations} from '../../Libs';
 import {Colors, Layouts, Paddings} from '../../Styles';
 import {AuthContext} from '../../Contexts';
@@ -30,9 +31,15 @@ export const Login = () => {
         await RNSInfo.setItem('token', data.login.token, {});
         setToken(data.login.token);
       }
+      if (error) {
+        showMessage({
+          message: error.message,
+          type: 'danger',
+        });
+      }
     };
     storeToken();
-  }, [loading, data]);
+  }, [loading, data, error]);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -63,6 +70,7 @@ export const Login = () => {
           buttonStyle={styles.buttonStyle}
           titleStyle={styles.buttonTextStyle}
           onPress={handleSubmit(onSubmit)}
+          loading={loading}
         />
       </View>
     </SafeAreaView>

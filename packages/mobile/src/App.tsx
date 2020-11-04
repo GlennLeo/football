@@ -6,6 +6,7 @@ import {ThemeProvider} from 'react-native-elements';
 import SplashScreen from 'react-native-splash-screen';
 import {ApolloProvider} from '@apollo/client';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
+import FlashMessage from 'react-native-flash-message';
 import RNSInfo from 'react-native-sensitive-info';
 import {ApplicationNavigator} from './Navigators';
 import {client} from './Libs';
@@ -21,9 +22,7 @@ const App = () => {
 
   const getToken = async () => {
     const currentToken = await RNSInfo.getItem('token', {});
-    // await RNSInfo.deleteItem('token', {});
     currentToken && setToken(currentToken);
-    console.log(currentToken);
     setIsLoading(false);
   };
 
@@ -32,7 +31,9 @@ const App = () => {
   }, [token]);
 
   useEffect(() => {
-    SplashScreen.hide();
+    if (!isLoading) {
+      SplashScreen.hide();
+    }
   }, [isLoading]);
 
   if (isLoading) return <Text>Loading</Text>;
@@ -43,6 +44,7 @@ const App = () => {
           <NavigationContainer>
             <ThemeProvider>
               <ApplicationNavigator />
+              <FlashMessage position="top" />
             </ThemeProvider>
           </NavigationContainer>
         </SafeAreaProvider>
