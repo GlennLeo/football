@@ -76,19 +76,20 @@ export const UserMutation = extendType({
         address: stringArg(),
       },
       resolve: async (_, { email, name, password, phone, address }, ctx) => {
+        const lowercaseEmail = email.toLowerCase();
         const existingUser = await ctx.prisma.user.findOne({
           where: {
-            email,
+            email: lowercaseEmail,
           },
         });
         if (existingUser) {
-          throw new Error("ERROR: Username already used.");
+          throw new Error("Username already used.");
         }
         var hash = bcrypt.hashSync(password, 10);
 
         const user = await ctx.prisma.user.create({
           data: {
-            email,
+            email: lowercaseEmail,
             phone,
             name,
             password: hash,
@@ -114,13 +115,14 @@ export const UserMutation = extendType({
         password: stringArg({ required: true }),
       },
       resolve: async (_, { email, password }, ctx) => {
+        const lowercaseEmail = email.toLowerCase();
         const existingUser = await ctx.prisma.user.findOne({
           where: {
-            email,
+            email: lowercaseEmail,
           },
         });
         if (!existingUser) {
-          throw new Error("ERROR: User not exist.");
+          throw new Error("User not exist.");
         }
         var isValidPassword = bcrypt.compareSync(
           password,
@@ -145,7 +147,7 @@ export const UserMutation = extendType({
             token: token,
           };
         }
-        throw new Error("ERROR: Invalid password.");
+        throw new Error("Invalid password.");
       },
     });
   },
