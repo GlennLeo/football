@@ -9,12 +9,13 @@ import RNSInfo from 'react-native-sensitive-info';
 import {showMessage} from 'react-native-flash-message';
 import {UserMutations} from '../../Libs';
 import {Colors, Layouts, Paddings} from '../../Styles';
-import {AuthContext} from '../../Contexts';
+import {AuthContext, UserContext} from '../../Contexts';
 
-export const Login = () => {
+export const Login = ({navigation}: any) => {
   const [login, {data, loading, error}] = useMutation(UserMutations.LOGIN);
   const {register, handleSubmit, setValue} = useForm();
   const {setToken} = useContext(AuthContext);
+  const {setUser} = useContext(UserContext);
 
   const onSubmit = (values: any) => {
     login({variables: {email: values.email, password: values.password}});
@@ -26,10 +27,13 @@ export const Login = () => {
   }, [register]);
 
   useEffect(() => {
-    const storeToken = async () => {
+    const handleAuth = async () => {
       if (data?.login?.token) {
         await RNSInfo.setItem('token', data.login.token, {});
         setToken(data.login.token);
+      }
+      if (data?.login?.user) {
+        setUser(data.login.user);
       }
       if (error) {
         showMessage({
@@ -38,40 +42,48 @@ export const Login = () => {
         });
       }
     };
-    storeToken();
+    handleAuth();
   }, [loading, data, error]);
 
   return (
     <SafeAreaView style={styles.container}>
-      <Text h1 h1Style={styles.h1}>
-        Login
-      </Text>
       <View>
-        <Input
-          label="Email"
-          placeholder="email@address.com"
-          style={styles.input}
-          labelStyle={styles.inputLabel}
-          onChangeText={(text) => setValue('email', text)}
-        />
-        <Input
-          label="Password"
-          placeholder="Password"
-          secureTextEntry={true}
-          style={styles.input}
-          labelStyle={styles.inputLabel}
-          onChangeText={(text) => setValue('password', text)}
-        />
+        <Text h1 h1Style={styles.h1}>
+          Login
+        </Text>
+        <View>
+          <Input
+            label="Email"
+            placeholder="email@address.com"
+            style={styles.input}
+            labelStyle={styles.inputLabel}
+            onChangeText={(text) => setValue('email', text)}
+          />
+          <Input
+            label="Password"
+            placeholder="Password"
+            secureTextEntry={true}
+            style={styles.input}
+            labelStyle={styles.inputLabel}
+            onChangeText={(text) => setValue('password', text)}
+          />
+        </View>
+        <View style={styles.buttonContainer}>
+          <Button
+            title="Login"
+            type="solid"
+            buttonStyle={styles.buttonStyle}
+            titleStyle={styles.buttonTextStyle}
+            onPress={handleSubmit(onSubmit)}
+            loading={loading}
+          />
+        </View>
       </View>
-      <View style={styles.buttonContainer}>
-        <Button
-          title="Login"
-          type="solid"
-          buttonStyle={styles.buttonStyle}
-          titleStyle={styles.buttonTextStyle}
-          onPress={handleSubmit(onSubmit)}
-          loading={loading}
-        />
+      <View style={styles.bottomPosition}>
+        <Text>Don't have an account? </Text>
+        <Text style={styles.link} onPress={() => navigation.navigate('Signup')}>
+          Signup
+        </Text>
       </View>
     </SafeAreaView>
   );
@@ -79,7 +91,7 @@ export const Login = () => {
 
 const styles = StyleSheet.create({
   container: {
-    ...Layouts.verticalCenter,
+    ...Layouts.verticalSpaceBetween,
     backgroundColor: Colors.primary,
     flex: 1,
     padding: Paddings.base,
@@ -111,5 +123,12 @@ const styles = StyleSheet.create({
   },
   buttonTextStyle: {
     color: Colors.primary,
+  },
+  bottomPosition: {
+    ...Layouts.flexRow,
+    justifyContent: 'center',
+  },
+  link: {
+    textDecorationLine: 'underline',
   },
 });

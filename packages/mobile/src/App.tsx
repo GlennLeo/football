@@ -10,15 +10,17 @@ import FlashMessage from 'react-native-flash-message';
 import RNSInfo from 'react-native-sensitive-info';
 import {ApplicationNavigator} from './Navigators';
 import {client} from './Libs';
-import {AuthContext} from './Contexts';
+import {AuthContext, UserContext} from './Contexts';
 
 declare const global: {HermesInternal: null | {}};
 
 const App = () => {
   const [token, setToken] = useState('');
+  const [user, setUser] = useState('');
   const [isLoading, setIsLoading] = useState(true);
 
-  const userValue = useMemo(() => ({token, setToken}), [token, setToken]);
+  const tokenValue = useMemo(() => ({token, setToken}), [token, setToken]);
+  const userValue = useMemo(() => ({user, setUser}), [user, setUser]);
 
   const getToken = async () => {
     const currentToken = await RNSInfo.getItem('token', {});
@@ -39,15 +41,17 @@ const App = () => {
   if (isLoading) return <Text>Loading</Text>;
   return (
     <ApolloProvider client={client}>
-      <AuthContext.Provider value={userValue}>
-        <SafeAreaProvider>
-          <NavigationContainer>
-            <ThemeProvider>
-              <ApplicationNavigator />
-              <FlashMessage position="top" />
-            </ThemeProvider>
-          </NavigationContainer>
-        </SafeAreaProvider>
+      <AuthContext.Provider value={tokenValue}>
+        <UserContext.Provider value={userValue}>
+          <SafeAreaProvider>
+            <NavigationContainer>
+              <ThemeProvider>
+                <ApplicationNavigator />
+                <FlashMessage position="top" />
+              </ThemeProvider>
+            </NavigationContainer>
+          </SafeAreaProvider>
+        </UserContext.Provider>
       </AuthContext.Provider>
     </ApolloProvider>
   );
