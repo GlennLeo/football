@@ -1,25 +1,22 @@
 import React, {useContext, useEffect} from 'react';
-import {Button, Text} from 'react-native-elements';
+import {Text} from 'react-native-elements';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import RNSInfo from 'react-native-sensitive-info';
-import {AuthContext, UserContext} from '../../Contexts';
+import {UserContext} from '../../Contexts';
 
 export const Dashboard = () => {
-  const {setToken} = useContext(AuthContext);
   const {user} = useContext(UserContext);
   useEffect(() => {
     console.log(user);
   }, []);
+
   return (
     <SafeAreaView>
       <Text h1>Dashboard</Text>
-      <Button
-        onPress={() => {
-          RNSInfo.deleteItem('token', {});
-          setToken('');
-        }}
-        title="Logout"
-      />
+      {user?.teams.length === 0 ? (
+        <Text h3>You haven't joined any teams yet!</Text>
+      ) : (
+        user.teams.map((team: any) => <Text h2>{team.name}</Text>)
+      )}
     </SafeAreaView>
   );
 };

@@ -28,6 +28,7 @@ export const Login = ({navigation}: any) => {
 
   useEffect(() => {
     const handleAuth = async () => {
+      console.log(data);
       if (data?.login?.token) {
         await RNSInfo.setItem('token', data.login.token, {});
         setToken(data.login.token);

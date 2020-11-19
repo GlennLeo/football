@@ -1,5 +1,4 @@
 import React, {useEffect, useMemo, useState} from 'react';
-import {Text} from 'react-native';
 import 'react-native-gesture-handler';
 import {NavigationContainer} from '@react-navigation/native';
 import {ThemeProvider} from 'react-native-elements';
@@ -38,7 +37,6 @@ const App = () => {
     }
   }, [isLoading]);
 
-  if (isLoading) return <Text>Loading</Text>;
   return (
     <ApolloProvider client={client}>
       <AuthContext.Provider value={tokenValue}>

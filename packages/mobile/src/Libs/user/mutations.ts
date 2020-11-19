@@ -10,6 +10,7 @@ export const LOGIN = gql`
         phone
         address
         teams {
+          id
           name
         }
       }
@@ -40,6 +41,7 @@ export const SIGNUP = gql`
         phone
         address
         teams {
+          id
           name
         }
       }
